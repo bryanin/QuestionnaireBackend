@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.model;
+package ru.bryanin.dev.questionnairebackend.model.user;
 
 public enum Position {
     HEAD_OF_PROMOTION_DEPARTMENT,

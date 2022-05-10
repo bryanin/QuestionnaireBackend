@@ -1,5 +1,10 @@
 package ru.bryanin.dev.questionnairebackend.model.security;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum SecurityPermission {
     HEAD_OF_PROMOTION_DEPARTMENT_READ("head_of_promotion_department:read"),
     HEAD_OF_PROMOTION_DEPARTMENT_WRITE("head_of_promotion_department:write"),
@@ -34,11 +39,4 @@ public enum SecurityPermission {
 
     private final String permission;
 
-    SecurityPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
 }

@@ -1,27 +1,22 @@
 package ru.bryanin.dev.questionnairebackend.model.security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.bryanin.dev.questionnairebackend.model.BasicUser;
+import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
 
 import java.util.Collection;
 import java.util.List;
 
+@AllArgsConstructor
 public class SecurityUser implements UserDetails {
 
     private final String username;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
-
-    public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
-        this.username = username;
-        this.password = password;
-        this.authorities = authorities;
-        this.isActive = isActive;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

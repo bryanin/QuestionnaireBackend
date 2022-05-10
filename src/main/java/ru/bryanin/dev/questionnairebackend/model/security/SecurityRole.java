@@ -1,11 +1,13 @@
 package ru.bryanin.dev.questionnairebackend.model.security;
 
 import com.google.common.collect.Sets;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public enum SecurityRole {
     ADMIN(Sets.immutableEnumSet(
             SecurityPermission.HEAD_OF_PROMOTION_DEPARTMENT_READ,
@@ -139,10 +141,6 @@ public enum SecurityRole {
     ));
 
     private final Set<SecurityPermission> securityPermissions;
-
-    SecurityRole(Set<SecurityPermission> securityPermissions) {
-        this.securityPermissions = securityPermissions;
-    }
 
     public Set<SecurityPermission> getPermissions() {
         return securityPermissions;

@@ -2,7 +2,7 @@ package ru.bryanin.dev.questionnairebackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.model.BasicUser;
+import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
 import ru.bryanin.dev.questionnairebackend.repository.BasicUserRepository;
 
 import javax.transaction.Transactional;
@@ -25,8 +25,7 @@ public class BasicUserService {
     }
 
     public BasicUser getUser(Long id) {
-        BasicUser basicUser = basicUserRepository.findById(id).orElseThrow(() -> new IllegalStateException("Сотрудник с id = " + id + " не существует"));
-        return basicUser;
+        return basicUserRepository.findById(id).orElseThrow(() -> new IllegalStateException("Сотрудник с id = " + id + " не существует"));
     }
 
     public BasicUser addNewUser(BasicUser basicUser) {
