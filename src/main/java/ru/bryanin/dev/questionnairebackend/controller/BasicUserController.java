@@ -37,6 +37,7 @@ public class BasicUserController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
+    @CrossOrigin(origins = "http://localhost:5000")
     public List<BasicUser> getAllUsers() {
         return basicUserService.getAllUsers();
     }

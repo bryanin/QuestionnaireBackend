@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.model.security;
+package ru.bryanin.dev.questionnairebackend.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,12 +1,15 @@
 package ru.bryanin.dev.questionnairebackend.service;
 
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.bryanin.dev.questionnairebackend.model.project.Project;
 import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
+import ru.bryanin.dev.questionnairebackend.repository.BasicUserRepository;
 import ru.bryanin.dev.questionnairebackend.repository.ProjectRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -15,11 +18,12 @@ import java.util.Optional;
 @Service
 public class ProjectService {
 
-    @Autowired
     private final ProjectRepository projectRepository;
+    private final BasicUserRepository basicUserRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, BasicUserRepository basicUserRepository) {
         this.projectRepository = projectRepository;
+        this.basicUserRepository = basicUserRepository;
     }
 
     public List<Project> getAllProjects() {
@@ -40,6 +44,14 @@ public class ProjectService {
         Optional<Project> optionalProjectBy1CId = projectRepository.findBy1CId(newProject1Cid);
         if(optionalProjectBy1CId.isPresent()) {
             throw new IllegalStateException("Проект 1C " + newProject1Cid + " уже привязан к проекту " + optionalProjectBy1CId.get().getTitle());
+        }
+        if(newProject.getCreatedAt() == null) {
+            newProject.setCreatedAt(LocalDate.now());
+        }
+        String newProjectOwnerEmail = newProject.getOwnerEmail();
+        Optional<BasicUser> optionalProjectByEmail = basicUserRepository.findBasicUserByEmail(newProjectOwnerEmail);
+        if(!optionalProjectByEmail.isPresent()) {
+            throw new IllegalStateException("Проект не может быть сохранен, т.к. пользователь с email " + newProjectOwnerEmail + " не зарегистрирован");
         }
         projectRepository.save(newProject);
         return projectRepository.findByTitle(newProject.getTitle()).get();
@@ -70,8 +82,8 @@ public class ProjectService {
         if(updatedProject.getDescription() != null && updatedProject.getDescription().length() > 0 && !Objects.equals(updatedProject.getDescription(), projectFromDB.getDescription())) {
             projectFromDB.setDescription(updatedProject.getDescription());
         }
-        if(updatedProject.getOwnerId() != null && !Objects.equals(updatedProject.getOwnerId(), projectFromDB.getOwnerId())) {
-            projectFromDB.setOwnerId(updatedProject.getOwnerId());
+        if(updatedProject.getOwnerEmail() != null && !Objects.equals(updatedProject.getOwnerEmail(), projectFromDB.getOwnerEmail())) {
+            projectFromDB.setOwnerEmail(updatedProject.getOwnerEmail());
         }
         if(!updatedProject.getTaskList().isEmpty() && updatedProject.getTaskList().size() > 0) {
             Collections.sort(updatedProject.getTaskList(), new Project.SortList());

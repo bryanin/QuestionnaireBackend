@@ -66,6 +66,9 @@ public class ProjectController {
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +
+            "'senior_engineer:write'," +
+            "'middle_engineer:write'," +
+            "'junior_engineer:write'," +
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")

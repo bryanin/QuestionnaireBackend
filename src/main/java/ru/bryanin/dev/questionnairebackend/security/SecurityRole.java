@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.model.security;
+package ru.bryanin.dev.questionnairebackend.security;
 
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;

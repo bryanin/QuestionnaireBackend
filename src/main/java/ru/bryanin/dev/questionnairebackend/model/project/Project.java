@@ -24,8 +24,8 @@ public class Project {
     private String title;
     @Column(name = "description")
     private String description;
-    @JoinColumn(table = "users", name = "owner_id", referencedColumnName = "id")
-    private Long ownerId;
+    @JoinColumn(table = "users", name = "owner_email", referencedColumnName = "email")
+    private String ownerEmail;
     @Column(name = "city", nullable = false)
     private String city;
     @Column(name = "created_at", nullable = false)
@@ -37,16 +37,19 @@ public class Project {
     public Project() {
     }
 
-    public Project(Long id, String id_1C, String title, String description, Long ownerId, String city, LocalDate createdAt) {
+    public Project(Long id, String id_1C, String title, String description, String ownerEmail, String city, LocalDate createdAt) {
         this.id = id;
         this.id_1C = id_1C;
         this.title = title;
         this.description = description;
-        this.ownerId = ownerId;
+        this.ownerEmail = ownerEmail;
         this.city = city;
         this.createdAt = createdAt;
     }
 
+    public LocalDate createdAt() {
+        return LocalDate.now();
+    }
 
     public static class SortList implements Comparator<Task> {
         @Override
@@ -66,7 +69,7 @@ public class Project {
         if (id_1C != null ? !id_1C.equals(project.id_1C) : project.id_1C != null) return false;
         if (!title.equals(project.title)) return false;
         if (description != null ? !description.equals(project.description) : project.description != null) return false;
-        if (ownerId != null ? !ownerId.equals(project.ownerId) : project.ownerId != null) return false;
+        if (ownerEmail != null ? !ownerEmail.equals(project.ownerEmail) : project.ownerEmail != null) return false;
         if (!city.equals(project.city)) return false;
         if (!createdAt.equals(project.createdAt)) return false;
         return taskList != null ? taskList.equals(project.taskList) : project.taskList == null;
@@ -78,7 +81,7 @@ public class Project {
         result = 31 * result + (id_1C != null ? id_1C.hashCode() : 0);
         result = 31 * result + title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (ownerId != null ? ownerId.hashCode() : 0);
+        result = 31 * result + (ownerEmail != null ? ownerEmail.hashCode() : 0);
         result = 31 * result + city.hashCode();
         result = 31 * result + createdAt.hashCode();
         result = 31 * result + (taskList != null ? taskList.hashCode() : 0);

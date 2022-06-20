@@ -1,8 +1,8 @@
 package ru.bryanin.dev.questionnairebackend.model.user;
 
 import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.model.security.AccessStatus;
-import ru.bryanin.dev.questionnairebackend.model.security.SecurityRole;
+import ru.bryanin.dev.questionnairebackend.security.AccessStatus;
+import ru.bryanin.dev.questionnairebackend.security.SecurityRole;
 import ru.bryanin.dev.questionnairebackend.model.task.Task;
 import ru.bryanin.dev.questionnairebackend.model.task.TaskComment;
 

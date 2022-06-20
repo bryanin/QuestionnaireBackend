@@ -1,6 +1,5 @@
 package ru.bryanin.dev.questionnairebackend.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +8,8 @@ import ru.bryanin.dev.questionnairebackend.model.task.*;
 import ru.bryanin.dev.questionnairebackend.model.task.System;
 import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
 import ru.bryanin.dev.questionnairebackend.model.user.Position;
-import ru.bryanin.dev.questionnairebackend.model.security.SecurityRole;
-import ru.bryanin.dev.questionnairebackend.model.security.AccessStatus;
+import ru.bryanin.dev.questionnairebackend.security.SecurityRole;
+import ru.bryanin.dev.questionnairebackend.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.repository.BasicUserRepository;
 import ru.bryanin.dev.questionnairebackend.repository.ProjectRepository;
 import ru.bryanin.dev.questionnairebackend.repository.TaskCommentRepository;
@@ -32,8 +31,8 @@ public class InitialConfig {
             BasicUser basicUser01 = new BasicUser(
                     1L,
                     "kondrich.anastasiya@luis.ru",
-                    "Anastasiya",
-                    "Kondrich",
+                    "Анастасия",
+                    "Кондрич",
                     "LUIS+",
                     "+7-987-831-63-55",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -44,8 +43,8 @@ public class InitialConfig {
             BasicUser basicUser02 = new BasicUser(
                     2L,
                     "bryanin.dmitriy@luis.ru",
-                    "Dmitriy",
-                    "Bryanin",
+                    "Дмитрий",
+                    "Брянин",
                     "LUIS+",
                     "+7-965-115-40-55",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -56,8 +55,8 @@ public class InitialConfig {
             BasicUser basicUser03 = new BasicUser(
                     3L,
                     "perov.roman@luis.ru",
-                    "Roman",
-                    "Perov",
+                    "Роман",
+                    "Перов",
                     "LUIS+",
                     "+7-905-531-66-05",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -68,8 +67,8 @@ public class InitialConfig {
             BasicUser basicUser04 = new BasicUser(
                     4L,
                     "konovalov.sergey@luis.ru",
-                    "Sergey",
-                    "Konovalov",
+                    "Сергей",
+                    "Коновалов",
                     "LUIS+",
                     "+7-905-105-75-50",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -80,8 +79,8 @@ public class InitialConfig {
             BasicUser basicUser05 = new BasicUser(
                     5L,
                     "romanov.boris@luis.ru",
-                    "Boris",
-                    "Romanov",
+                    "Борис",
+                    "Романов",
                     "LUIS+",
                     "+7-927-623-77-01",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -92,8 +91,8 @@ public class InitialConfig {
             BasicUser basicUser06 = new BasicUser(
                     6L,
                     "novikov.vladimir@luis.ru",
-                    "Vladimir",
-                    "Novikov",
+                    "Владимир",
+                    "Новиков",
                     "LUIS+",
                     "+7-987-311-17-98",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -104,8 +103,8 @@ public class InitialConfig {
             BasicUser basicUser07 = new BasicUser(
                     7L,
                     "zhuravlev.fedor@luis.ru",
-                    "Fedor",
-                    "Zhuravlev",
+                    "Федор",
+                    "Журавлев",
                     "LUIS+",
                     "+7-906-153-18-45",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -116,8 +115,8 @@ public class InitialConfig {
             BasicUser basicUser08 = new BasicUser(
                     8L,
                     "marakulin.alexander@luis.ru",
-                    "Alexandr",
-                    "Marakulin",
+                    "Александр",
+                    "Маракулин",
                     "LUIS+",
                     "+7-986-986-07-11",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -128,8 +127,8 @@ public class InitialConfig {
             BasicUser basicUser09 = new BasicUser(
                     9L,
                     "zaporozhceva.irina@luis.ru",
-                    "Irina",
-                    "Zaporozhceva",
+                    "Ирина",
+                    "Запорожцева",
                     "LUIS+",
                     "+7-927-152-21-33",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -140,8 +139,8 @@ public class InitialConfig {
             BasicUser basicUser10 = new BasicUser(
                     10L,
                     "chuhas.irina@luis.ru",
-                    "Irina",
-                    "Chuhas",
+                    "Ирина",
+                    "Чухась",
                     "LUIS+",
                     "+7-904-243-70-16",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
@@ -152,22 +151,10 @@ public class InitialConfig {
             BasicUser basicUser11 = new BasicUser(
                     11L,
                     "rassohin.mihail@luis.ru",
-                    "Mihail",
-                    "Rassohin",
+                    "Михаил",
+                    "Рассохин",
                     "LUIS+",
                     "+7-929-779-28-28",
-                    "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_DESIGNER,
-                    SecurityRole.MIDDLE_DESIGNER,
-                    AccessStatus.ACTIVE
-            );
-            BasicUser basicUser12 = new BasicUser(
-                    12L,
-                    "veretennikov.sergey@luis.ru",
-                    "Sergey",
-                    "Veretennikov",
-                    "LUIS+",
-                    "+7-927-059-40-72",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
                     Position.MIDDLE_DESIGNER,
                     SecurityRole.MIDDLE_DESIGNER,
@@ -185,7 +172,6 @@ public class InitialConfig {
             basicUserList.add(basicUser09);
             basicUserList.add(basicUser10);
             basicUserList.add(basicUser11);
-            basicUserList.add(basicUser12);
             basicUserRepository.saveAll(basicUserList);
 
 // -------  Add projects
@@ -195,7 +181,7 @@ public class InitialConfig {
                     "1C_000001",
                     "ТЦ Химки",
                     "Строительство торгового центра в Химках",
-                    2L,
+                    "bryanin.dmitriy@luis.ru",
                     "Московская область",
                     LocalDate.of(2022, 2, 11)
             );
@@ -204,7 +190,7 @@ public class InitialConfig {
                     "1C_000002",
                     "Больница в ст. Медведевская",
                     "Больница на 60 мест. Реализация в 2023 году",
-                    3L,
+                    "konovalov.sergey@luis.ru",
                     "Краснодарский край",
                     LocalDate.of(2022, 3, 20)
             );
@@ -213,14 +199,54 @@ public class InitialConfig {
                     "1C_000003",
                     "Гостиница Hot Season",
                     "Гостиница 5 звезд в Москве на Можайском шоссе",
-                    1L,
+                    "perov.roman@luis.ru",
                     "Московская область",
                     LocalDate.of(2022, 4, 1)
+            );
+            Project project04 = new Project(
+                    4L,
+                    "1C_000004",
+                    "Кинотеатр Родина",
+                    "Сеть кинотеатров на юге России",
+                    "perov.roman@luis.ru",
+                    "Ростовская область",
+                    LocalDate.of(2022, 4, 2)
+            );
+            Project project05 = new Project(
+                    5L,
+                    "1C_000005",
+                    "Музей музыки 19 века",
+                    "Объект культурного наследия. Реставрация. Министерство Культуры",
+                    "konovalov.sergey@luis.ru",
+                    "Калужская область",
+                    LocalDate.of(2022, 2, 23)
+            );
+            Project project06 = new Project(
+                    6L,
+                    "1C_000006",
+                    "Средняя общеобразовательная школа на 860 мест в г. Люберцы",
+                    "Часть комплексной застройки ГК Инград",
+                    "bryanin.dmitriy@luis.ru",
+                    "Московская область",
+                    LocalDate.of(2022, 4, 21)
+            );
+            Project project07 = new Project(
+                    7L,
+                    "1C_000007",
+                    "Политехнический институт в г. Иваново",
+                    "Объединенный с Педагогическим институтом в 2012 году (ул. К.Маркса)",
+                    "bryanin.dmitriy@luis.ru",
+                    "Московская область",
+                    LocalDate.of(2021, 12, 16)
             );
             List<Project> projectList = new ArrayList<>();
             projectList.add(project01);
             projectList.add(project02);
             projectList.add(project03);
+            projectList.add(project04);
+            projectList.add(project05);
+            projectList.add(project06);
+            projectList.add(project07);
             projectRepository.saveAll(projectList);
 
 // -------  Add tasks
