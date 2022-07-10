@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "users")
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BasicUser {
     @Id
     @SequenceGenerator(name = "users_sequence", sequenceName = "users_sequence", allocationSize = 1)

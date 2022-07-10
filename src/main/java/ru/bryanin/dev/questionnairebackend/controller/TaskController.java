@@ -74,7 +74,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addNewTask(task));
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +
@@ -86,7 +86,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +

@@ -30,6 +30,9 @@ public class Project {
     private String city;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
+    @Column(name = "project_status", nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private ProjectStatus projectStatus;
     @Transient
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> taskList;
@@ -45,10 +48,7 @@ public class Project {
         this.ownerEmail = ownerEmail;
         this.city = city;
         this.createdAt = createdAt;
-    }
-
-    public LocalDate createdAt() {
-        return LocalDate.now();
+        this.projectStatus = ProjectStatus.WITHOUT_ACTIVE_TASKS;
     }
 
     public static class SortList implements Comparator<Task> {

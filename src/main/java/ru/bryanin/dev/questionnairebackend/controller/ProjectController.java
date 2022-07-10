@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api/v1/project")
 public class ProjectController {
 
-    @Autowired
     private final ProjectService projectService;
 
     public ProjectController(ProjectService projectService) {
@@ -76,19 +75,19 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addNewProject(project));
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Project> deleteProject(@PathVariable("id") Long id) {
+    public ResponseEntity<Project> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping(path = "{id}")
+    @PatchMapping(path = "/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +

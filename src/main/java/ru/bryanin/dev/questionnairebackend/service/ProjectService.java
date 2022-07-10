@@ -4,6 +4,7 @@ import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.bryanin.dev.questionnairebackend.model.project.Project;
+import ru.bryanin.dev.questionnairebackend.model.project.ProjectStatus;
 import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
 import ru.bryanin.dev.questionnairebackend.repository.BasicUserRepository;
 import ru.bryanin.dev.questionnairebackend.repository.ProjectRepository;
@@ -53,6 +54,7 @@ public class ProjectService {
         if(!optionalProjectByEmail.isPresent()) {
             throw new IllegalStateException("Проект не может быть сохранен, т.к. пользователь с email " + newProjectOwnerEmail + " не зарегистрирован");
         }
+        newProject.setProjectStatus(ProjectStatus.WITHOUT_ACTIVE_TASKS);
         projectRepository.save(newProject);
         return projectRepository.findByTitle(newProject.getTitle()).get();
     }
@@ -85,11 +87,14 @@ public class ProjectService {
         if(updatedProject.getOwnerEmail() != null && !Objects.equals(updatedProject.getOwnerEmail(), projectFromDB.getOwnerEmail())) {
             projectFromDB.setOwnerEmail(updatedProject.getOwnerEmail());
         }
-        if(!updatedProject.getTaskList().isEmpty() && updatedProject.getTaskList().size() > 0) {
-            Collections.sort(updatedProject.getTaskList(), new Project.SortList());
-            Collections.sort(projectFromDB.getTaskList(), new Project.SortList());
-            if(!updatedProject.getTaskList().equals(projectFromDB.getTaskList())) {
-                projectFromDB.setTaskList(updatedProject.getTaskList());
+//
+        if(updatedProject.getTaskList() != null) {
+            if(!updatedProject.getTaskList().isEmpty() && updatedProject.getTaskList().size() > 0) {
+                Collections.sort(updatedProject.getTaskList(), new Project.SortList());
+                Collections.sort(projectFromDB.getTaskList(), new Project.SortList());
+                if (!updatedProject.getTaskList().equals(projectFromDB.getTaskList())) {
+                    projectFromDB.setTaskList(updatedProject.getTaskList());
+                }
             }
         }
         return projectFromDB;

@@ -1,12 +1,10 @@
 package ru.bryanin.dev.questionnairebackend.model.task;
 
 import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.model.project.Project;
-import ru.bryanin.dev.questionnairebackend.model.user.BasicUser;
+import ru.bryanin.dev.questionnairebackend.model.questionnaire.Questionnaire;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -17,70 +15,76 @@ public class Task {
     @SequenceGenerator(name = "tasks_sequence", sequenceName = "tasks_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tasks_sequence")
     private Long id;
-    @Column(name = "task_starter_email", nullable = false)
-    private String taskStarterEmail;
+    @Column(name = "owner_email", nullable = false)
+    private String ownerEmail;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "task_status", nullable = false)
-    private TaskStatus taskStatus;
+    @Column(name = "status", nullable = false)
+    private TaskStatus status;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "task_complexity", nullable = false)
-    private TaskComplexity taskComplexity;
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "system", nullable = false)
-    private System system;
+    @Column(name = "complexity", nullable = false)
+    private TaskComplexity complexity;
     @JoinColumn(table = "projects", name = "project_id", referencedColumnName = "id")
     private Long projectId;
     @Transient
     @OneToMany(mappedBy = "comments", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TaskComment> taskCommentList;
+    private List<TaskComment> commentList;
     @JoinColumn(table = "users", name = "performer_id", referencedColumnName = "id")
     private Long performerId;
-    @Column(name = "content", columnDefinition="TEXT")
-    private String content;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "questionnaire_id", referencedColumnName = "id")
+    private Questionnaire questionnaireId;
+    @Column(name = "created_at", nullable = false)
+    private LocalDate createdAt;
 
     public Task() {
     }
 
-    public Task(Long id, String taskStarterEmail, TaskStatus taskStatus, TaskComplexity taskComplexity, System system, Long projectId, List<TaskComment> taskCommentList, Long performerId, String content) {
+    public Task(
+            Long id,
+            String ownerEmail,
+            TaskStatus status,
+            TaskComplexity complexity,
+            Long projectId,
+            List<TaskComment> commentList,
+            Long performerId,
+            //Questionnaire questionnaire,
+            LocalDate createdAt
+    ) {
         this.id = id;
-        this.taskStarterEmail = taskStarterEmail;
-        this.taskStatus = taskStatus;
-        this.taskComplexity = taskComplexity;
-        this.system = system;
+        this.ownerEmail = ownerEmail;
+        this.status = status;
+        this.complexity = complexity;
         this.projectId = projectId;
-        this.taskCommentList = taskCommentList;
+        this.commentList = commentList;
         this.performerId = performerId;
-        this.content = content;
+        //this.questionnaire = questionnaire;
+        this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Task task = (Task) o;
+//        if (!ownerEmail.equals(task.ownerEmail)) return false;
+//        if (status != task.status) return false;
+//        if (complexity != task.complexity) return false;
+//        //if (questionnaire != task.questionnaire) return false;
+//        if (projectId != null ? !projectId.equals(task.projectId) : task.projectId != null) return false;
+//        if (commentList != null ? !commentList.equals(task.commentList) : task.commentList != null) return false;
+//        if (performerId != null ? !performerId.equals(task.performerId) : task.performerId != null) return false;
+//        return questionnaire != null ? questionnaire.equals(task.questionnaire) : task.questionnaire == null;
+//    }
 
-        Task task = (Task) o;
-
-        if (!taskStarterEmail.equals(task.taskStarterEmail)) return false;
-        if (taskStatus != task.taskStatus) return false;
-        if (taskComplexity != task.taskComplexity) return false;
-        if (system != task.system) return false;
-        if (projectId != null ? !projectId.equals(task.projectId) : task.projectId != null) return false;
-        if (taskCommentList != null ? !taskCommentList.equals(task.taskCommentList) : task.taskCommentList != null)
-            return false;
-        if (performerId != null ? !performerId.equals(task.performerId) : task.performerId != null) return false;
-        return content != null ? content.equals(task.content) : task.content == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = taskStarterEmail.hashCode();
-        result = 31 * result + taskStatus.hashCode();
-        result = 31 * result + taskComplexity.hashCode();
-        result = 31 * result + system.hashCode();
-        result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
-        result = 31 * result + (taskCommentList != null ? taskCommentList.hashCode() : 0);
-        result = 31 * result + (performerId != null ? performerId.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = ownerEmail.hashCode();
+//        result = 31 * result + status.hashCode();
+//        result = 31 * result + complexity.hashCode();
+//        result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
+//        result = 31 * result + (commentList != null ? commentList.hashCode() : 0);
+//        result = 31 * result + (performerId != null ? performerId.hashCode() : 0);
+//        //result = 31 * result + (questionnaire != null ? questionnaire.hashCode() : 0);
+//        return result;
+//    }
 }

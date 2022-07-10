@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.bryanin.dev.questionnairebackend.model.task.Task;
 import ru.bryanin.dev.questionnairebackend.repository.TaskRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,27 +42,25 @@ public class TaskService {
         }
     }
 
+    @Transactional
     public Task updateTask(Long id, Task updatedTask) {
         Task taskFromDB = taskRepository.findById(id).orElseThrow(() -> new IllegalStateException("Задачи с id = " + id + " не существует"));
 
-        if(updatedTask.getTaskStatus() != null && !Objects.equals(updatedTask.getTaskStatus(), taskFromDB.getTaskStatus())) {
-            taskFromDB.setTaskStatus(updatedTask.getTaskStatus());
+        if(updatedTask.getStatus() != null && !Objects.equals(updatedTask.getStatus(), taskFromDB.getStatus())) {
+            taskFromDB.setStatus(updatedTask.getStatus());
         }
-        if(updatedTask.getTaskComplexity() != null && !Objects.equals(updatedTask.getTaskComplexity(), taskFromDB.getTaskComplexity())) {
-            taskFromDB.setTaskComplexity(updatedTask.getTaskComplexity());
+        if(updatedTask.getComplexity() != null && !Objects.equals(updatedTask.getComplexity(), taskFromDB.getComplexity())) {
+            taskFromDB.setComplexity(updatedTask.getComplexity());
         }
-//        if(updatedTask.getSystem() != null && !Objects.equals(updatedTask.getSystem(), taskFromDB.getSystem())) {
-//            taskFromDB.setSystem(updatedTask.getSystem());
-//        }
         if(updatedTask.getProjectId() != null && !Objects.equals(updatedTask.getProjectId(), taskFromDB.getProjectId())) {
             taskFromDB.setProjectId(updatedTask.getProjectId());
         }
         if(updatedTask.getPerformerId() != null && !Objects.equals(updatedTask.getPerformerId(), taskFromDB.getPerformerId())) {
             taskFromDB.setPerformerId(updatedTask.getPerformerId());
         }
-        if(updatedTask.getContent() != null && !Objects.equals(updatedTask.getContent(), taskFromDB.getContent())) {
-            taskFromDB.setContent(updatedTask.getContent());
-        }
+//        if(updatedTask.getQuestionnaire() != null && !Objects.equals(updatedTask.getQuestionnaire(), taskFromDB.getQuestionnaire())) {
+//            taskFromDB.setQuestionnaire(updatedTask.getQuestionnaire());
+//        }
 
         return taskFromDB;
     }
