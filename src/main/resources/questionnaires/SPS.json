@@ -1,0 +1,26 @@
+{
+  "system": "SPS",
+  "content": [
+    {
+      "question": "Вопрос?",
+      "answer": {
+        "simpleAnswer": "Ответ",
+        "multipleAnswer": []
+      }
+    },
+    {
+      "question": "Вопрос?",
+      "answer": {
+        "simpleAnswer": "Ответ",
+        "multipleAnswer": []
+      }
+    },
+    {
+      "question": "Вопрос?",
+      "answer": {
+        "simpleAnswer": "Ответ",
+        "multipleAnswer": []
+      }
+    }
+  ]
+}

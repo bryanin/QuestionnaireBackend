@@ -1,7 +1,6 @@
 {
-  "Id" : "",
-  "System" : "SOT",
-  "Content": [
+  "system": "SOT",
+  "content": [
     {
       "question": "Какой тип системы ВН требуется организовать на объекте?",
       "answer": {
