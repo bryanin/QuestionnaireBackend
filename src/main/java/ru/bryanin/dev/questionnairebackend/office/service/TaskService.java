@@ -52,6 +52,7 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+    // ERRORS!
     @Transactional
     public Task updateTask(Long id, Task updatedTask) {
         // Fields:
