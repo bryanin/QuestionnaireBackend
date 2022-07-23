@@ -123,11 +123,8 @@ public class TaskController {
             "'middle_engineer:read'," +
             "'junior_engineer:read'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id,
-                                                 @RequestBody(required = false) Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody(required = false) Task task) {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(id, task));
     }
-
-
 
 }
