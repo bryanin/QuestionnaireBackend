@@ -1,6 +1,6 @@
 package ru.bryanin.dev.questionnairebackend.office.model.user;
 
-public enum Position {
+public enum EmployeePosition {
     HEAD_OF_PROMOTION_DEPARTMENT,
     HEAD_OF_PROMOTION_DEPARTMENT_ASSISTANT,
     HEAD_OF_DESIGN_DEPARTMENT,

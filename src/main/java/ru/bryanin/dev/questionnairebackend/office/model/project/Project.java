@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -24,29 +25,39 @@ public class Project {
     private String description;
     @JoinColumn(table = "users", name = "owner_email", referencedColumnName = "email")
     private String ownerEmail;
-    @Column(name = "city", nullable = false)
-    private String city;
+    @Transient
+    @OneToMany(mappedBy = "addresses", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addressList;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
-    @Column(name = "project_status", nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private ProjectStatus projectStatus;
+    private Status status;
     @Transient
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> taskList;
+    @Transient
+    @OneToMany(mappedBy = "project_files")
+    private List<ProjectsFiles> projectsFiles;
+    @Transient
+    @OneToMany (mappedBy = "projects_partners", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectsPartners> projectsPartners;
 
     public Project() {
     }
 
-    public Project(Long id, String id_1C, String title, String description, String ownerEmail, String city, LocalDate createdAt) {
+    public Project(Long id, String id_1C, String title, String description, String ownerEmail, List<Address> addressList, LocalDate createdAt, Status status, List<Task> taskList, List<ProjectsFiles> projectsFiles, List<ProjectsPartners> projectsPartners) {
         this.id = id;
         this.id_1C = id_1C;
         this.title = title;
         this.description = description;
         this.ownerEmail = ownerEmail;
-        this.city = city;
+        this.addressList = addressList;
         this.createdAt = createdAt;
-        this.projectStatus = ProjectStatus.WITHOUT_ACTIVE_TASKS;
+        this.status = status;
+        this.taskList = taskList;
+        this.projectsFiles = projectsFiles;
+        this.projectsPartners = projectsPartners;
     }
 
     public static class SortList implements Comparator<Task> {
@@ -64,25 +75,37 @@ public class Project {
         Project project = (Project) o;
 
         if (!id.equals(project.id)) return false;
-        if (id_1C != null ? !id_1C.equals(project.id_1C) : project.id_1C != null) return false;
+        if (!id_1C.equals(project.id_1C)) return false;
         if (!title.equals(project.title)) return false;
-        if (description != null ? !description.equals(project.description) : project.description != null) return false;
-        if (ownerEmail != null ? !ownerEmail.equals(project.ownerEmail) : project.ownerEmail != null) return false;
-        if (!city.equals(project.city)) return false;
+        if (!Objects.equals(description, project.description)) return false;
+        if (!ownerEmail.equals(project.ownerEmail)) return false;
+        if (!Objects.equals(addressList, project.addressList)) return false;
         if (!createdAt.equals(project.createdAt)) return false;
-        return taskList != null ? taskList.equals(project.taskList) : project.taskList == null;
+        if (status != project.status) return false;
+        if (!Objects.equals(taskList, project.taskList)) return false;
+        if (!Objects.equals(projectsFiles, project.projectsFiles))
+            return false;
+        return Objects.equals(projectsPartners, project.projectsPartners);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + (id_1C != null ? id_1C.hashCode() : 0);
+        result = 31 * result + id_1C.hashCode();
         result = 31 * result + title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (ownerEmail != null ? ownerEmail.hashCode() : 0);
-        result = 31 * result + city.hashCode();
+        result = 31 * result + ownerEmail.hashCode();
+        result = 31 * result + (addressList != null ? addressList.hashCode() : 0);
         result = 31 * result + createdAt.hashCode();
+        result = 31 * result + status.hashCode();
         result = 31 * result + (taskList != null ? taskList.hashCode() : 0);
+        result = 31 * result + (projectsFiles != null ? projectsFiles.hashCode() : 0);
+        result = 31 * result + (projectsPartners != null ? projectsPartners.hashCode() : 0);
         return result;
+    }
+
+    public enum Status {
+        WITH_ACTIVE_TASKS,
+        WITHOUT_ACTIVE_TASKS
     }
 }

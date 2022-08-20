@@ -2,9 +2,8 @@ package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
 import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectStatus;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
-import ru.bryanin.dev.questionnairebackend.office.repository.BasicUserRepository;
+import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.repository.EmployeeRepository;
 import ru.bryanin.dev.questionnairebackend.office.repository.ProjectRepository;
 
 import javax.transaction.Transactional;
@@ -18,11 +17,11 @@ import java.util.Optional;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final BasicUserRepository basicUserRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public ProjectService(ProjectRepository projectRepository, BasicUserRepository basicUserRepository) {
+    public ProjectService(ProjectRepository projectRepository, EmployeeRepository employeeRepository) {
         this.projectRepository = projectRepository;
-        this.basicUserRepository = basicUserRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Project> getAllProjects() {
@@ -48,11 +47,11 @@ public class ProjectService {
             newProject.setCreatedAt(LocalDate.now());
         }
         String newProjectOwnerEmail = newProject.getOwnerEmail();
-        Optional<BasicUser> optionalProjectByEmail = basicUserRepository.findBasicUserByEmail(newProjectOwnerEmail);
+        Optional<Employee> optionalProjectByEmail = employeeRepository.findBasicUserByEmail(newProjectOwnerEmail);
         if(!optionalProjectByEmail.isPresent()) {
             throw new IllegalStateException("Проект не может быть сохранен, т.к. пользователь с email " + newProjectOwnerEmail + " не зарегистрирован");
         }
-        newProject.setProjectStatus(ProjectStatus.WITHOUT_ACTIVE_TASKS);
+        newProject.setStatus(Project.Status.WITHOUT_ACTIVE_TASKS);
         projectRepository.save(newProject);
         return projectRepository.findByTitle(newProject.getTitle()).get();
     }

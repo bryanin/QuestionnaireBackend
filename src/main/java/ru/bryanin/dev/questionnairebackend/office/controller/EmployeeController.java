@@ -5,20 +5,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
-import ru.bryanin.dev.questionnairebackend.office.service.BasicUserService;
+import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.service.EmployeeService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
-public class BasicUserController {
+@RequestMapping("/api/v1/employee")
+public class EmployeeController {
 
-    @Autowired
-    private final BasicUserService basicUserService;
+    private final EmployeeService employeeService;
 
-    public BasicUserController(BasicUserService basicUserService) {
-        this.basicUserService = basicUserService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping()
@@ -38,8 +37,8 @@ public class BasicUserController {
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
     @CrossOrigin(origins = "http://localhost:5000")
-    public List<BasicUser> getAllUsers() {
-        return basicUserService.getAllUsers();
+    public List<Employee> getAllUsers() {
+        return employeeService.getAllUsers();
     }
 
     @GetMapping("/{id}")
@@ -58,8 +57,8 @@ public class BasicUserController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public ResponseEntity<BasicUser> getUser(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(basicUserService.getUser(id));
+    public ResponseEntity<Employee> getUser(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.getUser(id));
     }
 
     @PostMapping()
@@ -69,8 +68,8 @@ public class BasicUserController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<BasicUser> addNewUser(@RequestBody BasicUser basicUser) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(basicUserService.addNewUser(basicUser));
+    public ResponseEntity<Employee> addNewUser(@RequestBody Employee employee) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addNewUser(employee));
     }
 
     @DeleteMapping(path = "/{id}")
@@ -80,8 +79,8 @@ public class BasicUserController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<BasicUser> deleteUser(@PathVariable("id") Long id) {
-        basicUserService.deleteUser(id);
+    public ResponseEntity<Employee> deleteUser(@PathVariable("id") Long id) {
+        employeeService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -92,8 +91,8 @@ public class BasicUserController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<BasicUser> updateUser(@PathVariable Long id,
-                                                @RequestBody(required = false) BasicUser basicUser) {
-        return ResponseEntity.status(HttpStatus.OK).body(basicUserService.updateUser(id, basicUser));
+    public ResponseEntity<Employee> updateUser(@PathVariable Long id,
+                                               @RequestBody(required = false) Employee employee) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateUser(id, employee));
     }
 }

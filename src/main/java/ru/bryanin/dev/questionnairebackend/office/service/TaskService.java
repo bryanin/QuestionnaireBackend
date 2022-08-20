@@ -1,9 +1,11 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
+import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
 import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
-import ru.bryanin.dev.questionnairebackend.office.repository.BasicUserRepository;
+import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.repository.EmployeeRepository;
+import ru.bryanin.dev.questionnairebackend.office.repository.ProjectRepository;
 import ru.bryanin.dev.questionnairebackend.office.repository.TaskRepository;
 
 import javax.transaction.Transactional;
@@ -11,16 +13,17 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
-    private final BasicUserRepository basicUserRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ProjectRepository projectRepository;
 
-    public TaskService(TaskRepository taskRepository, BasicUserRepository basicUserRepository) {
+    public TaskService(TaskRepository taskRepository, EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
-        this.basicUserRepository = basicUserRepository;
+        this.employeeRepository = employeeRepository;
+        this.projectRepository = projectRepository;
     }
 
     public List<Task> getAllTasks() {
@@ -41,6 +44,8 @@ public class TaskService {
         }
         taskRepository.save(newTask);
         Optional<Task> optionalTaskAfterSaving = taskRepository.findAll().stream().filter(task -> task.equals(newTask)).findFirst();
+        // Check up!
+        projectRepository.findById(newTask.getProjectId()).get().setStatus(Project.Status.WITH_ACTIVE_TASKS);
         return optionalTaskAfterSaving.orElse(newTask);
     }
 
@@ -70,7 +75,7 @@ public class TaskService {
 
         Task taskFromDB = taskRepository.findById(id).orElseThrow(() -> new IllegalStateException("Задачи с id = " + id + " не существует"));
         if(updatedTask.getOwnerEmail() != null && !Objects.equals(updatedTask.getOwnerEmail(), taskFromDB.getOwnerEmail())) {
-            Optional<BasicUser> userFromDB = basicUserRepository.findBasicUserByEmail(updatedTask.getOwnerEmail());
+            Optional<Employee> userFromDB = employeeRepository.findBasicUserByEmail(updatedTask.getOwnerEmail());
             if(!userFromDB.isPresent()) {
                 throw new IllegalStateException("Пользователя с email " + updatedTask.getOwnerEmail() + " не существует");
             }
@@ -89,8 +94,8 @@ public class TaskService {
         if(updatedTask.getQuestionnaire() != null &&  !Objects.equals(updatedTask.getQuestionnaire(), taskFromDB.getQuestionnaire())) {
             taskFromDB.setQuestionnaire(updatedTask.getQuestionnaire());
         }
-        if(updatedTask.getPerformerId() != null && !Objects.equals(updatedTask.getPerformerId(), taskFromDB.getPerformerId())) {
-            taskFromDB.setPerformerId(updatedTask.getPerformerId());
+        if(updatedTask.getPerformerEmail() != null && !Objects.equals(updatedTask.getPerformerEmail(), taskFromDB.getPerformerEmail())) {
+            taskFromDB.setPerformerEmail(updatedTask.getPerformerEmail());
         }
 //        if(updatedTask.getQuestionnaire() != null && !Objects.equals(updatedTask.getQuestionnaire(), taskFromDB.getQuestionnaire())) {
 //            taskFromDB.setQuestionnaire(updatedTask.getQuestionnaire());

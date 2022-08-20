@@ -17,7 +17,8 @@ public enum Status {
     UNDER_DISPUTE("Открыт спор"),
     DISPUTE_REJECTED("Спор отклонен"),
     UNDER_REVIEW_BY_CUSTOMER("На проверке у клиента"),
-    ACCEPTED_BY_CUSTOMER("Согласована клиентом");
+    ACCEPTED_BY_CUSTOMER("Согласована клиентом"),
+    ARCHIVED("Согласована клиентом");
 
     private final String description;
 }
