@@ -4,10 +4,10 @@
 Дополнительные: комментарии к задачам, компании, адреса, файлы проекта, опросные листы к задачам и т.п.
 
 ## Пользователь
-Абстрактный пользователь имеет следующие поля: id, email, firstName, lastName, companyId, phone, password, securityRole, accessStatus
-Пользователи разделены на сотрудников и клиентов:
+Абстрактный пользователь имеет следующие поля: id, email, firstName, lastName, companyId, phone, password, securityRole, accessStatus. 
+Пользователи разделены на сотрудников и клиентов.
 
-Дополнительные поля: employeePosition 
+Дополнительные поля: employeePosition. 
 Представлены следующие роли сотрудников:
 - HEAD_OF_PROMOTION_DEPARTMENT
 - HEAD_OF_PROMOTION_DEPARTMENT_ASSISTANT
@@ -46,7 +46,7 @@
 
 
 ### Клиент (CUSTOMER)
-Дополнительные поля: customerPosition, relatedCompanies
+Дополнительные поля: customerPosition, relatedCompanies. 
 Представлены следующие роли сотрудников:
 - DIRECTOR
 - HEAD_OF_DEPARTMENT
