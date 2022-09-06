@@ -94,7 +94,56 @@
 
 
 ## Задача
-Задача имеет следующие поля: id, ownerEmail, status, complexity, projectId, system, questionnaire, performerEmail, createdAt.
+Задача имеет следующие поля: id, ownerEmail, status, complexity, projectId, commentList, system, questionnaire, performerEmail, stageList, createdAt, projectsFiles.
+
+- id - уникальный идентификатор задачи. Генерируется автоматически. Уникальное значение. Обязательное поле
+- ownerEmail - email владельца проекта. Обязательное поле
+- status - текущий статус задачи: 
+  - IN_HEAP("Новая")
+  - UNDER_INITIAL_REVIEW_BY_ENGINEER("На первичной проверке инженером")
+  - UNDER_INITIAL_REVIEW_BY_HEAD_OF_DESIGN_DEPARTMENT("На проверке у руководителя проектного отдела")
+  - IN_QUEUE("В очереди задач"),
+  - CHANGED_IN_QUEUE("Изменена после утверждения"),
+  - CHOSEN_BY_DESIGNER("Выбрана потенциальным исполнителем"),
+  - ASSIGNED_TO_PERFORMER("Назначена исполнителю"),
+  - UNDER_FINAL_REVIEW_BY_ENGINEER("Выполнена. На проверке у инженера"),
+  - UNDER_DISPUTE("Открыт спор"),
+  - DISPUTE_REJECTED("Спор отклонен"),
+  - UNDER_REVIEW_BY_CUSTOMER("На проверке у клиента"),
+  - ACCEPTED_BY_CUSTOMER("Согласована клиентом"),
+  - ARCHIVED("Согласована клиентом");)
+- complexity - сложность задачи:
+  - LEVEL_1("*")
+  - LEVEL_2("**")
+  - LEVEL_3("***")
+  - LEVEL_4("****")
+  - LEVEL_5("*****")
+- projectId - id проекта, к которому привязана заявка
+- commentList - список комментариев (сообщений) по задаче
+- system - система:
+  - SOT("Система видеонаблюдения")
+  - SPS ("Система пожарной сигнализации")
+  - APPZ("Автоматика противопожарной защиты")
+  - AUPT("Автоматическая установка пожаротушения")
+  - SOUE("Система оповещения и управления эвакуацией")
+  - SOTS("Система охранно-тревожной сигнализации")
+  - SKUD("Система контроля и управления доступом")
+- questionnaire - анкета (опросный лист)
+- performerEmail - email исполнителя задачи
+- stageList - объем задачи:
+  - SPECIFICATION("Спецификация")
+  - ARRANGEMENT_OF_EQUIPMENT("")
+  - STRUCTURAL_SCHEME("")
+  - EXPLANATORY_NOTE("")
+  - ACOUSTIC_CALCULATION("")
+  - CONNECTION_SCHEME("")
+  - POWER_SUPPLY_CALCULATION("")
+  - AXONOMETRIC_SCHEME("")
+  - CABLE_LOCATION_CABLE("")
+  - PROJECT_DOCUMENTATION("")
+  - WORKING_DOCUMENTATION("");
+- createdAt - дата создания задачи. Неизменяемое значение. Обязательное поле
+- projectsFiles - перечень файлов, связанных с данным проектом (на первых этапах для упрощения здесь будут храниться ссылки на файлы)
 
 
 ## Используемые технологии
