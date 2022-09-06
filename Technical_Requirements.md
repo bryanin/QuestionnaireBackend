@@ -131,17 +131,20 @@
 - questionnaire - анкета (опросный лист)
 - performerEmail - email исполнителя задачи
 - stageList - объем задачи:
+  - SCHEMATIC_DESIGN ("Стадия П")
+  - CONSTRUCTION_DOCUMENTS ("Стадия Р")
   - SPECIFICATION("Спецификация")
-  - ARRANGEMENT_OF_EQUIPMENT("")
-  - STRUCTURAL_SCHEME("")
-  - EXPLANATORY_NOTE("")
-  - ACOUSTIC_CALCULATION("")
-  - CONNECTION_SCHEME("")
-  - POWER_SUPPLY_CALCULATION("")
-  - AXONOMETRIC_SCHEME("")
-  - CABLE_LOCATION_CABLE("")
-  - PROJECT_DOCUMENTATION("")
-  - WORKING_DOCUMENTATION("");
+  - ARRANGEMENT_DRAWING("Чертеж с расстановкой")
+  - PIPE_ARRANGEMENT_DRAWING ("Чертеж с трубной разводкой")
+  - SCHEMATIC_DIAGRAM("Структурная схема")
+  - EXPLANATORY_NOTE("Пояснительная записка")
+  - SP_CALCULATION("Акустический расчет")
+  - CONNECTION_SCHEME("Схема подключений")
+  - POWER_SUPPLY_CALCULATION("Задание на электроснабжение")
+  - AXONOMETRIC_DIAGRAM ("Аксонометрическая схема")
+  - CABLE_LOCATION_CABLE("Кабельный журнал")
+  - BATTERY_BACKUP_CALCULATION ("Расчет источников резервного питания")
+  - HYDRAULIC_CALCULATION("Гидравлический расчет")
 - createdAt - дата создания задачи. Неизменяемое значение. Обязательное поле
 - projectsFiles - перечень файлов, связанных с данным проектом (на первых этапах для упрощения здесь будут храниться ссылки на файлы)
 
