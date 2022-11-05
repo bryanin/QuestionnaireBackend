@@ -15,12 +15,12 @@ import java.util.UUID;
 @RequestMapping()
 public class TaskController {
 
+    // TO DO
     // Generate UUID for every task
     // Generate short password for every task
     // if user wasn't authorised he can type his short password
     //
 
-    @Autowired
     private final TaskService taskService;
 
     public TaskController(TaskService taskService) {

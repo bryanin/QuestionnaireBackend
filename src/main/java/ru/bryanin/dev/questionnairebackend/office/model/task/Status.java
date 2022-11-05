@@ -6,19 +6,19 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Status {
-    IN_HEAP("Новая"),
-    UNDER_INITIAL_REVIEW_BY_ENGINEER("На первичной проверке инженером"),
-    UNDER_INITIAL_REVIEW_BY_HEAD_OF_DESIGN_DEPARTMENT("На проверке у руководителя проектного отдела"),
-    IN_QUEUE("В очереди задач"),
-    CHANGED_IN_QUEUE("Изменена после утверждения"),
-    CHOSEN_BY_DESIGNER("Выбрана потенциальным исполнителем"),
-    ASSIGNED_TO_PERFORMER("Назначена исполнителю"),
-    UNDER_FINAL_REVIEW_BY_ENGINEER("Выполнена. На проверке у инженера"),
-    UNDER_DISPUTE("Открыт спор"),
-    DISPUTE_REJECTED("Спор отклонен"),
-    UNDER_REVIEW_BY_CUSTOMER("На проверке у клиента"),
-    ACCEPTED_BY_CUSTOMER("Согласована клиентом"),
-    ARCHIVED("Согласована клиентом");
+    NEW("Новая"),
+    TO_BE_COMPLETED_BY_CUSTOMER("Задача находится на заполнении опросного листа и проверке у клиента"),
+    COMPLETED_BY_CUSTOMER("Опросный лист заполнен и проверен клиентом"),
+    UNDER_INITIAL_REVIEW_BY_THE_ENGINEER("Задача на проверке у инженера перед отправкой в проектный отдел"),
+    UNDER_REVIEW_BY_THE_HEAD_OF_THE_PROJECT_DEPARTMENT("Задача отправлена руководителю проектного отдела"),
+    UNDER_REVIEW_BY_THE_ENGINEER("Задача на согласовании сроков у инженера после предложения руководителя проектного отдела"),
+    REQUESTED_BY_THE_ENGINEER("Инженер запрашивает подтверждение замены на одну или несколько задач"),
+    IN_QUEUE("Задача поставлена в очередь, срок выполнения и объем работы согласован"),
+    IN_PIPELINE("Задача передана на исполнение проектироввщику"),
+//    W(),
+//    W(),
+//    W(),
+    ARCHIVED("Архивирована");
 
     private final String description;
 }

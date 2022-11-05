@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/questionnaire")
-public class QuestionnaireController {
+public class DefaultQuestionnaireController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority(" +

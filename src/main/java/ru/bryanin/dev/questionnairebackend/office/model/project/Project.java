@@ -25,19 +25,18 @@ public class Project {
     private String description;
     @JoinColumn(table = "users", name = "owner_email", referencedColumnName = "email")
     private String ownerEmail;
-    @Transient
-    @OneToMany(mappedBy = "addresses", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addressList;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Address address;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private Project.Status status;
     @Transient
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> taskList;
     @Transient
-    @OneToMany(mappedBy = "project_files")
+    @OneToMany(mappedBy = "projects_files")
     private List<ProjectsFiles> projectsFiles;
     @Transient
     @OneToMany (mappedBy = "projects_partners", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,13 +45,13 @@ public class Project {
     public Project() {
     }
 
-    public Project(Long id, String id_1C, String title, String description, String ownerEmail, List<Address> addressList, LocalDate createdAt, Status status, List<Task> taskList, List<ProjectsFiles> projectsFiles, List<ProjectsPartners> projectsPartners) {
+    public Project(Long id, String id_1C, String title, String description, String ownerEmail, Address address, LocalDate createdAt, Status status, List<Task> taskList, List<ProjectsFiles> projectsFiles, List<ProjectsPartners> projectsPartners) {
         this.id = id;
         this.id_1C = id_1C;
         this.title = title;
         this.description = description;
         this.ownerEmail = ownerEmail;
-        this.addressList = addressList;
+        this.address = address;
         this.createdAt = createdAt;
         this.status = status;
         this.taskList = taskList;
@@ -79,7 +78,7 @@ public class Project {
         if (!title.equals(project.title)) return false;
         if (!Objects.equals(description, project.description)) return false;
         if (!ownerEmail.equals(project.ownerEmail)) return false;
-        if (!Objects.equals(addressList, project.addressList)) return false;
+        if (!Objects.equals(address, project.address)) return false;
         if (!createdAt.equals(project.createdAt)) return false;
         if (status != project.status) return false;
         if (!Objects.equals(taskList, project.taskList)) return false;
@@ -95,7 +94,7 @@ public class Project {
         result = 31 * result + title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + ownerEmail.hashCode();
-        result = 31 * result + (addressList != null ? addressList.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + createdAt.hashCode();
         result = 31 * result + status.hashCode();
         result = 31 * result + (taskList != null ? taskList.hashCode() : 0);

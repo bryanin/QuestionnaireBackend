@@ -14,20 +14,22 @@ public class ProjectsFiles {
     @SequenceGenerator(name = "projects_files_sequence", sequenceName = "projects_files_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projects_files_sequence")
     private Long id;
-    @ManyToOne
-    private Project project;
-    @ManyToOne
-    private Task task;
+    @JoinColumn(table = "projects", name = "project_id", referencedColumnName = "id")
+    private Long projectId;
+    @JoinColumn(table = "tasks", name = "task_id", referencedColumnName = "id")
+    private Long taskId;
     @Column(name = "file_path")
     private String filePath;
 
     public ProjectsFiles() {
     }
 
-    public ProjectsFiles(Long id, Project project, Task task, String filePath) {
+    public ProjectsFiles(Long id, Long projectId, Long taskId, String filePath) {
         this.id = id;
-        this.project = project;
-        this.task = task;
+        this.projectId = projectId;
+        this.taskId = taskId;
         this.filePath = filePath;
     }
+
+
 }

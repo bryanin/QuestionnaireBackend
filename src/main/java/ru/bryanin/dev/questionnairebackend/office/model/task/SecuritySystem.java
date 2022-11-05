@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum System {
+public enum SecuritySystem {
     SOT("Система видеонаблюдения"),
     SPS ("Система пожарной сигнализации"),
     APPZ("Автоматика противопожарной защиты"),

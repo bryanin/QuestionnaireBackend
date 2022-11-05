@@ -28,13 +28,11 @@ public class Address {
     private String house;
     @Column(name = "block")
     private String block;
-    @JoinColumn(table = "projects", name = "project_id", referencedColumnName = "id")
-    private Long projectId;
 
     public Address() {
     }
 
-    public Address(Long id, int postalCode, String country, String region, String city, String settlement, String street, String house, String block, Long projectId) {
+    public Address(Long id, int postalCode, String country, String region, String city, String settlement, String street, String house, String block) {
         this.id = id;
         this.postalCode = postalCode;
         this.country = country;
@@ -44,7 +42,17 @@ public class Address {
         this.street = street;
         this.house = house;
         this.block = block;
-        this.projectId = projectId;
     }
 
+    @Override
+    public String toString() {
+        return "" + postalCode +
+                ", " + country +
+                ", " + region +
+                ", " + city +
+                ", " + settlement +
+                ", " + street +
+                ", " + house +
+                ", " + block;
+    }
 }

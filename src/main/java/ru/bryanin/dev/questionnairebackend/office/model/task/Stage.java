@@ -7,16 +7,16 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Stage {
     SPECIFICATION("Спецификация"),
-    ARRANGEMENT_OF_EQUIPMENT(""),
-    STRUCTURAL_SCHEME(""),
-    EXPLANATORY_NOTE(""),
-    ACOUSTIC_CALCULATION(""),
-    CONNECTION_SCHEME(""),
-    POWER_SUPPLY_CALCULATION(""),
-    AXONOMETRIC_SCHEME(""),
-    CABLE_LOCATION_CABLE(""),
-    PROJECT_DOCUMENTATION(""),
-    WORKING_DOCUMENTATION("");
+    ARRANGEMENT_OF_EQUIPMENT("Расстанововка на планах"),
+    STRUCTURAL_SCHEME("Структурная схема"),
+    EXPLANATORY_NOTE("Пояснительная записка"),
+    ACOUSTIC_CALCULATION("Акустический расчет"),
+    CONNECTION_SCHEME("Схема подключений"),
+    POWER_SUPPLY_CALCULATION("Расчет источников электропитания"),
+    AXONOMETRIC_SCHEME("Аксонометрическая схема"),
+    CABLE_LOCATION_CABLE("Кабельный журнал"),
+    PROJECT_DOCUMENTATION("Стадия П"),
+    WORKING_DOCUMENTATION("Стадия Р");
 
     private final String description;
 }

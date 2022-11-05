@@ -1,6 +1,8 @@
 package ru.bryanin.dev.questionnairebackend.office.model.project;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import ru.bryanin.dev.questionnairebackend.office.model.company.Company;
 
 import javax.persistence.*;
@@ -14,29 +16,36 @@ public class ProjectsPartners {
     @SequenceGenerator(name = "projects_partners_sequence", sequenceName = "projects_partners_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projects_partners_sequence")
     private Long id;
-    @ManyToOne
-    private Company company;
-    @ManyToOne
-    private Project project;
+    @JoinColumn(table = "companies", name = "company_id", referencedColumnName = "id")
+    private Long companyId;
+    @JoinColumn(table = "companies", name = "company_title_short", referencedColumnName = "title_short")
+    private String companyTitleShort;
+    @JoinColumn(table = "projects", name = "project_id", referencedColumnName = "id")
+    private Long projectId;
     @Column(name = "partner_role")
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private PartnerRole partnerRole;
 
-    public enum Role {
-        END_USER,
-        INSTALLER,
-        TRADE_COMPANY,
-        GENERAL_CONTRACTOR,
-        DESIGNER
+    @Getter
+    @AllArgsConstructor
+    public enum PartnerRole {
+        END_USER("Заказчик"),
+        INSTALLER ("Инсталлятор"),
+        TRADE_COMPANY("Торговая компания"),
+        GENERAL_CONTRACTOR("Генподрядчик"),
+        DESIGNER("Проектировщик");
+
+        public final String description;
     }
 
     public ProjectsPartners() {
     }
 
-    public ProjectsPartners(Long id, Company company, Project project, Role role) {
+    public ProjectsPartners(Long id, Long companyId, String companyTitleShort, Long projectId, PartnerRole partnerRole) {
         this.id = id;
-        this.company = company;
-        this.project = project;
-        this.role = role;
+        this.companyId = companyId;
+        this.companyTitleShort = companyTitleShort;
+        this.projectId = projectId;
+        this.partnerRole = partnerRole;
     }
 }

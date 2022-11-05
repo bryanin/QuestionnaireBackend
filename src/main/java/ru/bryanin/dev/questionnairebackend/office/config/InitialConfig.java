@@ -1,6 +1,5 @@
 package ru.bryanin.dev.questionnairebackend.office.config;
 
-import com.google.common.collect.Sets;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,7 @@ import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
 import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsFiles;
 import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsPartners;
 import ru.bryanin.dev.questionnairebackend.office.model.task.*;
-import ru.bryanin.dev.questionnairebackend.office.model.task.System;
+import ru.bryanin.dev.questionnairebackend.office.model.task.SecuritySystem;
 import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
 import ru.bryanin.dev.questionnairebackend.office.model.user.CustomerPosition;
 import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
@@ -339,8 +338,7 @@ public class InitialConfig {
                     "",
                     "1-я Ямского Поля",
                     "28",
-                    "",
-                    1L);
+                    "");
 
 
             Project project01 = new Project(
@@ -349,7 +347,7 @@ public class InitialConfig {
                     "ТЦ Химки",
                     "Строительство торгового центра в Химках",
                     "bryanin.dmitriy@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 2, 11),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -362,7 +360,7 @@ public class InitialConfig {
                     "Больница в ст. Медведевская",
                     "Больница на 60 мест. Реализация в 2023 году",
                     "konovalov.sergey@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 3, 20),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -375,7 +373,7 @@ public class InitialConfig {
                     "Гостиница Hot Season",
                     "Гостиница 5 звезд в Москве на Можайском шоссе",
                     "perov.roman@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 4, 1),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -388,7 +386,7 @@ public class InitialConfig {
                     "Кинотеатр Родина",
                     "Сеть кинотеатров на юге России",
                     "perov.roman@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 4, 2),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -401,7 +399,7 @@ public class InitialConfig {
                     "Музей музыки 19 века",
                     "Объект культурного наследия. Реставрация. Министерство Культуры",
                     "konovalov.sergey@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 2, 23),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -414,7 +412,7 @@ public class InitialConfig {
                     "Средняя общеобразовательная школа на 860 мест в г. Люберцы",
                     "Часть комплексной застройки ГК Инград",
                     "bryanin.dmitriy@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2022, 4, 21),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -427,7 +425,7 @@ public class InitialConfig {
                     "Политехнический институт в г. Иваново",
                     "Объединенный с Педагогическим институтом в 2012 году (ул. К.Маркса)",
                     "bryanin.dmitriy@luis.ru",
-                    Arrays.asList(address01),
+                    address01,
                     LocalDate.of(2021, 12, 16),
                     Project.Status.WITHOUT_ACTIVE_TASKS,
                     null,
@@ -446,46 +444,52 @@ public class InitialConfig {
 
             ProjectsPartners projectsPartners01 = new ProjectsPartners(
                     1L,
-                    company02,
-                    project01,
-                    ProjectsPartners.Role.DESIGNER
+                    company02.getId(),
+                    company02.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.DESIGNER
             );
 
             ProjectsPartners projectsPartners02 = new ProjectsPartners(
                     2L,
-                    company03,
-                    project01,
-                    ProjectsPartners.Role.END_USER
+                    company03.getId(),
+                    company03.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.END_USER
             );
 
             ProjectsPartners projectsPartners03 = new ProjectsPartners(
                     3L,
-                    company04,
-                    project01,
-                    ProjectsPartners.Role.GENERAL_CONTRACTOR
+                    company04.getId(),
+                    company04.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.GENERAL_CONTRACTOR
             );
 
             project01.setProjectsPartners(Arrays.asList(projectsPartners01, projectsPartners02, projectsPartners03));
 
             ProjectsPartners projectsPartners04 = new ProjectsPartners(
                     4L,
-                    company03,
-                    project04,
-                    ProjectsPartners.Role.DESIGNER
+                    company03.getId(),
+                    company03.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.DESIGNER
             );
 
             ProjectsPartners projectsPartners05 = new ProjectsPartners(
                     5L,
-                    company04,
-                    project04,
-                    ProjectsPartners.Role.END_USER
+                    company04.getId(),
+                    company04.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.END_USER
             );
 
             ProjectsPartners projectsPartners06 = new ProjectsPartners(
                     6L,
-                    company05,
-                    project04,
-                    ProjectsPartners.Role.GENERAL_CONTRACTOR
+                    company05.getId(),
+                    company05.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.GENERAL_CONTRACTOR
             );
 
             project04.setProjectsPartners(Arrays.asList(projectsPartners04, projectsPartners05, projectsPartners06));
@@ -510,105 +514,147 @@ public class InitialConfig {
             Task task01 = new Task(
                     1L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.APPZ,
+                    SecuritySystem.APPZ,
                     questionnaire01,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 1, 30));
+                    LocalDate.of(2022, 1, 30),
+                    LocalDate.of(2022, 2, 27),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 05),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 16),
+                    null);
 
             project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task02 = new Task(
                    2L,
                     "perov.roman@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     5L,
                     null,
-                    System.AUPT,
+                    SecuritySystem.AUPT,
                     questionnaire02,
                     null,
-                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT, Stage.AXONOMETRIC_SCHEME)),
-                    LocalDate.of(2022, 2, 13));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION)),
+                    LocalDate.of(2022, 2, 13),
+                    LocalDate.of(2022, 2, 27),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 05),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 16),
+                    null);
 
             project05.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task03 = new Task(
                     3L,
                     "konovalov.sergey@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     3L,
                     null,
-                    System.SKUD,
+                    SecuritySystem.SKUD,
                     questionnaire03,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.STRUCTURAL_SCHEME)),
-                    LocalDate.of(2022, 3, 05));
+                    LocalDate.of(2022, 3, 05),
+                    LocalDate.of(2022, 3, 27),
+                    LocalDate.of(2022, 3, 15),
+                    LocalDate.of(2022, 3, 05),
+                    LocalDate.of(2022, 3, 15),
+                    LocalDate.of(2022, 3, 16),
+                    null);
 
             project03.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task04 = new Task(
                     4L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.SOT,
+                    SecuritySystem.SOT,
                     questionnaire04,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 1, 30));
+                    LocalDate.of(2022, 1, 30),
+                    LocalDate.of(2022, 2, 27),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 05),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 16),
+                    null);
 
             project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task05 = new Task(
                     5L,
                     "perov.roman@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     4L,
                     null,
-                    System.SOTS,
+                    SecuritySystem.SOTS,
                     questionnaire05,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 2, 16));
+                    LocalDate.of(2022, 2, 16),
+                    LocalDate.of(2022, 2, 27),
+                    LocalDate.of(2022, 2, 20),
+                    LocalDate.of(2022, 2, 18),
+                    LocalDate.of(2022, 2, 20),
+                    LocalDate.of(2022, 2, 27),
+                    null);
 
             project04.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task06 = new Task(
                     6L,
                     "konovalov.sergey@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     4L,
                     null,
-                    System.SOUE,
+                    SecuritySystem.SOUE,
                     questionnaire06,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT, Stage.ACOUSTIC_CALCULATION)),
-                    LocalDate.of(2022, 2, 10));
+                    LocalDate.of(2022, 2, 10),
+                    LocalDate.of(2022, 2, 27),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 11),
+                    LocalDate.of(2022, 2, 15),
+                    LocalDate.of(2022, 2, 16),
+                    null);
 
             project04.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
             Task task07 = new Task(
                     7L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.SPS,
+                    SecuritySystem.SPS,
                     questionnaire07,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 12, 30));
+                    LocalDate.of(2022, 12, 30),
+                    LocalDate.of(2023, 2, 27),
+                    LocalDate.of(2023, 2, 15),
+                    LocalDate.of(2023, 2, 05),
+                    LocalDate.of(2023, 2, 15),
+                    LocalDate.of(2023, 2, 16),
+                    null);
 
             project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
 
@@ -623,8 +669,8 @@ public class InitialConfig {
 
             ProjectsFiles projectsFiles01 = new ProjectsFiles(
                     1L,
-                    project01,
-                    task01,
+                    project01.getId(),
+                    task01.getId(),
                     "https://disk.yandex.ru/d/2ZzId3Qyzf9agA"
             );
 
