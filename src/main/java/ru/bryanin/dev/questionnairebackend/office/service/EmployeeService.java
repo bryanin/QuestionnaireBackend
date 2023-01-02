@@ -27,6 +27,10 @@ public class EmployeeService {
         return employeeRepository.findById(id).orElseThrow(() -> new IllegalStateException("Сотрудник с id = " + id + " не существует"));
     }
 
+    public Employee getBasicUserByEmail(String email) {
+        return employeeRepository.findBasicUserByEmail(email).orElseThrow(() -> new IllegalStateException("Сотрудник с email = " + email + " не существует"));
+    }
+
     public Employee addNewUser(Employee employee) {
         Optional<Employee> basicUserOptional = employeeRepository.findBasicUserByEmail(employee.getEmail());
         if(basicUserOptional.isPresent()) {

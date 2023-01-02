@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+//@PrimaryKeyJoinColumn(name = "customer_id")
 public class Customer extends AbstractUser {
 
     @Column(name = "position")

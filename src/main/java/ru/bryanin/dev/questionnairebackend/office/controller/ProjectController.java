@@ -92,8 +92,7 @@ public class ProjectController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id,
-                                                @RequestBody(required = false) Project project) {
+    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody(required = false) Project project) {
         return ResponseEntity.status(HttpStatus.OK).body(projectService.updateProject(id, project));
     }
 }

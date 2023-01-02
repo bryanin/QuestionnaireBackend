@@ -5,12 +5,15 @@ import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
 
 import javax.persistence.*;
 
+//@Entity
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AbstractUser {
 
     @Id
-    @SequenceGenerator(name = "customers_sequence", sequenceName = "customers_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customers_sequence")
+    @SequenceGenerator(name = "users_sequence", sequenceName = "users_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
+    @Column(name = "id")
     private Long id;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -55,6 +58,10 @@ public class AbstractUser {
         this.password = password;
         this.securityRole = securityRole;
         this.accessStatus = accessStatus;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getEmail() {

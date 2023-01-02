@@ -1,5 +1,6 @@
 package ru.bryanin.dev.questionnairebackend.office.model.project;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
 
@@ -25,7 +26,7 @@ public class Project {
     private String description;
     @JoinColumn(table = "users", name = "owner_email", referencedColumnName = "email")
     private String ownerEmail;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private Address address;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
@@ -41,6 +42,13 @@ public class Project {
     @Transient
     @OneToMany (mappedBy = "projects_partners", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectsPartners> projectsPartners;
+//    Подумать над реализацией
+//    @Transient
+//    @JsonSerialize
+//    private String ownerLastName;
+//    @Transient
+//    @JsonSerialize
+//    private String ownerFirstName;
 
     public Project() {
     }
@@ -73,12 +81,11 @@ public class Project {
 
         Project project = (Project) o;
 
-        if (!id.equals(project.id)) return false;
-        if (!id_1C.equals(project.id_1C)) return false;
+        if (!Objects.equals(id_1C, project.id_1C)) return false;
         if (!title.equals(project.title)) return false;
         if (!Objects.equals(description, project.description)) return false;
         if (!ownerEmail.equals(project.ownerEmail)) return false;
-        if (!Objects.equals(address, project.address)) return false;
+        if (!address.equals(project.address)) return false;
         if (!createdAt.equals(project.createdAt)) return false;
         if (status != project.status) return false;
         if (!Objects.equals(taskList, project.taskList)) return false;
@@ -89,12 +96,11 @@ public class Project {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + id_1C.hashCode();
+        int result = id_1C != null ? id_1C.hashCode() : 0;
         result = 31 * result + title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + ownerEmail.hashCode();
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + address.hashCode();
         result = 31 * result + createdAt.hashCode();
         result = 31 * result + status.hashCode();
         result = 31 * result + (taskList != null ? taskList.hashCode() : 0);
@@ -104,7 +110,7 @@ public class Project {
     }
 
     public enum Status {
-        WITH_ACTIVE_TASKS,
-        WITHOUT_ACTIVE_TASKS
+        ACTIVE,
+        ARCHIVED
     }
 }

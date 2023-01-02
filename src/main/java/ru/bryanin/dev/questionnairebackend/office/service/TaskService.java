@@ -45,7 +45,7 @@ public class TaskService {
         taskRepository.save(newTask);
         Optional<Task> optionalTaskAfterSaving = taskRepository.findAll().stream().filter(task -> task.equals(newTask)).findFirst();
         // Check up!
-        projectRepository.findById(newTask.getProjectId()).get().setStatus(Project.Status.WITH_ACTIVE_TASKS);
+        projectRepository.findById(newTask.getProjectId()).get().setStatus(Project.Status.ACTIVE);
         return optionalTaskAfterSaving.orElse(newTask);
     }
 

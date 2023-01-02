@@ -349,7 +349,7 @@ public class InitialConfig {
                     "bryanin.dmitriy@luis.ru",
                     address01,
                     LocalDate.of(2022, 2, 11),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -362,7 +362,7 @@ public class InitialConfig {
                     "konovalov.sergey@luis.ru",
                     address01,
                     LocalDate.of(2022, 3, 20),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -375,7 +375,7 @@ public class InitialConfig {
                     "perov.roman@luis.ru",
                     address01,
                     LocalDate.of(2022, 4, 1),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -388,7 +388,7 @@ public class InitialConfig {
                     "perov.roman@luis.ru",
                     address01,
                     LocalDate.of(2022, 4, 2),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -401,7 +401,7 @@ public class InitialConfig {
                     "konovalov.sergey@luis.ru",
                     address01,
                     LocalDate.of(2022, 2, 23),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -414,7 +414,7 @@ public class InitialConfig {
                     "bryanin.dmitriy@luis.ru",
                     address01,
                     LocalDate.of(2022, 4, 21),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -427,7 +427,7 @@ public class InitialConfig {
                     "bryanin.dmitriy@luis.ru",
                     address01,
                     LocalDate.of(2021, 12, 16),
-                    Project.Status.WITHOUT_ACTIVE_TASKS,
+                    Project.Status.ARCHIVED,
                     null,
                     null,
                     null
@@ -530,7 +530,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 2, 16),
                     null);
 
-            project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project01.setStatus(Project.Status.ACTIVE);
 
             Task task02 = new Task(
                    2L,
@@ -551,7 +551,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 2, 16),
                     null);
 
-            project05.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project05.setStatus(Project.Status.ACTIVE);
 
             Task task03 = new Task(
                     3L,
@@ -572,7 +572,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 3, 16),
                     null);
 
-            project03.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project03.setStatus(Project.Status.ACTIVE);
 
             Task task04 = new Task(
                     4L,
@@ -593,7 +593,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 2, 16),
                     null);
 
-            project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project01.setStatus(Project.Status.ACTIVE);
 
             Task task05 = new Task(
                     5L,
@@ -614,7 +614,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 2, 27),
                     null);
 
-            project04.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project04.setStatus(Project.Status.ACTIVE);
 
             Task task06 = new Task(
                     6L,
@@ -635,7 +635,7 @@ public class InitialConfig {
                     LocalDate.of(2022, 2, 16),
                     null);
 
-            project04.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project04.setStatus(Project.Status.ACTIVE);
 
             Task task07 = new Task(
                     7L,
@@ -656,7 +656,7 @@ public class InitialConfig {
                     LocalDate.of(2023, 2, 16),
                     null);
 
-            project01.setStatus(Project.Status.WITH_ACTIVE_TASKS);
+            project01.setStatus(Project.Status.ACTIVE);
 
             List<Task> taskList = new ArrayList<>();
             taskList.add(task01);

@@ -1,6 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +37,6 @@ public class EmployeeController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    @CrossOrigin(origins = "http://localhost:5000")
     public List<Employee> getAllUsers() {
         return employeeService.getAllUsers();
     }
@@ -59,6 +59,26 @@ public class EmployeeController {
             "'junior_sales_manager:read')")
     public ResponseEntity<Employee> getUser(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(employeeService.getUser(id));
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasAnyAuthority(" +
+            "'head_of_promotion_department:read', " +
+            "'head_of_promotion_department_assistant:read'," +
+            "'head_of_design_department:read'," +
+            "'senior_designer:read'," +
+            "'middle_designer:read'," +
+            "'junior_designer:read'," +
+            "'head_of_engineer_promotion_department:read'," +
+            "'senior_engineer:read'," +
+            "'middle_engineer:read'," +
+            "'junior_engineer:read'," +
+            "'head_of_sales:read'," +
+            "'senior_sales_manager:read'," +
+            "'middle_sales_manager:read'," +
+            "'junior_sales_manager:read')")
+    public ResponseEntity<Employee> getUserByEmail(@RequestParam(required = false) String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.getBasicUserByEmail(email));
     }
 
     @PostMapping()

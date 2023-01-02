@@ -1,6 +1,6 @@
 package ru.bryanin.dev.questionnairebackend.office.model.user;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.bryanin.dev.questionnairebackend.office.model.task.Comment;
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
@@ -11,41 +11,44 @@ import java.util.List;
 
 @Entity
 @Table(name = "employees")
+//@PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends AbstractUser {
 
     @Column(name = "position")
     @Enumerated(value = EnumType.STRING)
-    private EmployeePosition employeePosition;
+    private EmployeePosition position;
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     @Transient
+    @JsonIgnore
     private List<Task> tasks;
     @OneToMany(mappedBy = "comments", cascade = CascadeType.ALL, orphanRemoval = true)
     @Transient
+    @JsonIgnore
     private List<Comment> taskComments;
 
     public Employee() {
     }
 
-    public Employee(String email, String firstName, String lastName, Long companyId, String phone, String password, EmployeePosition employeePosition, SecurityRole securityRole, AccessStatus accessStatus, List<Task> tasks, List<Comment> taskComments) {
+    public Employee(String email, String firstName, String lastName, Long companyId, String phone, String password, EmployeePosition position, SecurityRole securityRole, AccessStatus accessStatus, List<Task> tasks, List<Comment> taskComments) {
         super(email, firstName, lastName, companyId, phone, password, securityRole, accessStatus);
-        this.employeePosition = employeePosition;
+        this.position = position;
         this.tasks = tasks;
         this.taskComments = taskComments;
     }
 
-    public Employee(Long id, String email, String firstName, String lastName, Long companyId, String phone, String password, EmployeePosition employeePosition, SecurityRole securityRole, AccessStatus accessStatus, List<Task> tasks, List<Comment> taskComments) {
+    public Employee(Long id, String email, String firstName, String lastName, Long companyId, String phone, String password, EmployeePosition position, SecurityRole securityRole, AccessStatus accessStatus, List<Task> tasks, List<Comment> taskComments) {
         super(id, email, firstName, lastName, companyId, phone, password, securityRole, accessStatus);
-        this.employeePosition = employeePosition;
+        this.position = position;
         this.tasks = tasks;
         this.taskComments = taskComments;
     }
 
-    public EmployeePosition getEmployeePosition() {
-        return employeePosition;
+    public EmployeePosition getPosition() {
+        return position;
     }
 
-    public void setEmployeePosition(EmployeePosition employeePosition) {
-        this.employeePosition = employeePosition;
+    public void setPosition(EmployeePosition position) {
+        this.position = position;
     }
 
     public List<Task> getTasks() {
@@ -63,4 +66,5 @@ public class Employee extends AbstractUser {
     public void setTaskComments(List<Comment> taskComments) {
         this.taskComments = taskComments;
     }
+
 }
