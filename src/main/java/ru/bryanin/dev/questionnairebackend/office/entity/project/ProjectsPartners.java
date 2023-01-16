@@ -1,9 +1,8 @@
-package ru.bryanin.dev.questionnairebackend.office.model.project;
+package ru.bryanin.dev.questionnairebackend.office.entity.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import ru.bryanin.dev.questionnairebackend.office.model.company.Company;
 
 import javax.persistence.*;
 

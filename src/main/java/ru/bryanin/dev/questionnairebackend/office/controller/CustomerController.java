@@ -1,11 +1,10 @@
 package ru.bryanin.dev.questionnairebackend.office.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Customer;
 import ru.bryanin.dev.questionnairebackend.office.service.CustomerService;
 
 import java.util.List;

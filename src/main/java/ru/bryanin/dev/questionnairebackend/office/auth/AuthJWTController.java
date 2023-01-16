@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
 import ru.bryanin.dev.questionnairebackend.office.repository.EmployeeRepository;
 import ru.bryanin.dev.questionnairebackend.office.security.JWTTokenProvider;
 

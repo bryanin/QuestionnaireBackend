@@ -1,10 +1,9 @@
 package ru.bryanin.dev.questionnairebackend.office.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Project;
 
 import java.util.Optional;
 

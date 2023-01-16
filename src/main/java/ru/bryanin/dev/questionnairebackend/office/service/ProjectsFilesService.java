@@ -1,8 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsFiles;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsFiles;
 import ru.bryanin.dev.questionnairebackend.office.repository.ProjectsFilesRepository;
 
 import java.util.List;
@@ -18,4 +17,5 @@ public class ProjectsFilesService {
     public List<ProjectsFiles> getAllProjectsFilesByProjectId(Long id) {
         return projectsFilesRepository.getAllProjectsFilesByProjectId(id).orElseThrow(() -> new IllegalStateException("Проекта с id = " + id + " не существует"));
     }
+
 }

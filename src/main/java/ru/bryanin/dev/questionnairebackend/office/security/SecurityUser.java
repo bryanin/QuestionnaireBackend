@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
 
 import java.util.Collection;
 import java.util.List;

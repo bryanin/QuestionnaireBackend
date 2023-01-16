@@ -3,7 +3,7 @@ package ru.bryanin.dev.questionnairebackend.customer.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.Task;
 
 import java.util.Optional;
 

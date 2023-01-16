@@ -1,8 +1,7 @@
-package ru.bryanin.dev.questionnairebackend.office.model.project;
+package ru.bryanin.dev.questionnairebackend.office.entity.project;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.Task;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +9,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-@Data
 @Entity
 @Table(name = "projects")
 public class Project {
@@ -34,12 +32,15 @@ public class Project {
     @Enumerated(value = EnumType.STRING)
     private Project.Status status;
     @Transient
+    @JsonIgnore
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> taskList;
     @Transient
+    @JsonIgnore
     @OneToMany(mappedBy = "projects_files")
     private List<ProjectsFiles> projectsFiles;
     @Transient
+    @JsonIgnore
     @OneToMany (mappedBy = "projects_partners", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectsPartners> projectsPartners;
 //    Подумать над реализацией
@@ -66,6 +67,107 @@ public class Project {
         this.projectsFiles = projectsFiles;
         this.projectsPartners = projectsPartners;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getId_1C() {
+        return id_1C;
+    }
+
+    public void setId_1C(String id_1C) {
+        this.id_1C = id_1C;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public List<ProjectsFiles> getProjectsFiles() {
+        return projectsFiles;
+    }
+
+    public void setProjectsFiles(List<ProjectsFiles> projectsFiles) {
+        this.projectsFiles = projectsFiles;
+    }
+
+    public List<ProjectsPartners> getProjectsPartners() {
+        return projectsPartners;
+    }
+
+    public void setProjectsPartners(List<ProjectsPartners> projectsPartners) {
+        this.projectsPartners = projectsPartners;
+    }
+
+//    Подумать над реализацией
+//    public String getOwnerLastName() {
+//        return "ownerLastName";
+//    }
+//
+//    public void setOwnerLastName(String ownerLastName) {
+//        this.ownerLastName = ownerLastName;
+//    }
+//
+//    public String getOwnerFirstName() {
+//        return "ownerFirstName";
+//    }
+//
+//    public void setOwnerFirstName(String ownerFirstName) {
+//        this.ownerFirstName = ownerFirstName;
+//    }
 
     public static class SortList implements Comparator<Task> {
         @Override

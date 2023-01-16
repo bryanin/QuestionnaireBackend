@@ -1,7 +1,7 @@
-package ru.bryanin.dev.questionnairebackend.office.model.task;
+package ru.bryanin.dev.questionnairebackend.office.entity.task;
 
 import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsFiles;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsFiles;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -41,7 +41,7 @@ public class Task {
     @CollectionTable(name="tasks_stages")
     @Enumerated(value = EnumType.STRING)
     @Column(name = "stage")
-    private Set<Stage> stageList;
+    private Set<Stage> stageSet;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
     @Column(name = "guaranteed_due_date")
@@ -61,7 +61,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, String ownerEmail, Status status, Complexity complexity, Long projectId, List<Comment> commentList, SecuritySystem securitySystem, String questionnaire, String performerEmail, Set<Stage> stageList, LocalDate createdAt, LocalDate guaranteedDueDate, LocalDate desiredDueDate, LocalDate actualLaunchDate, LocalDate estimatedCompletionDate, LocalDate dateOfActualCompletion, List<ProjectsFiles> projectsFiles) {
+    public Task(Long id, String ownerEmail, Status status, Complexity complexity, Long projectId, List<Comment> commentList, SecuritySystem securitySystem, String questionnaire, String performerEmail, Set<Stage> stageSet, LocalDate createdAt, LocalDate guaranteedDueDate, LocalDate desiredDueDate, LocalDate actualLaunchDate, LocalDate estimatedCompletionDate, LocalDate dateOfActualCompletion, List<ProjectsFiles> projectsFiles) {
         this.id = id;
         this.ownerEmail = ownerEmail;
         this.status = status;
@@ -71,7 +71,7 @@ public class Task {
         this.securitySystem = securitySystem;
         this.questionnaire = questionnaire;
         this.performerEmail = performerEmail;
-        this.stageList = stageList;
+        this.stageSet = stageSet;
         this.createdAt = createdAt;
         this.guaranteedDueDate = guaranteedDueDate;
         this.desiredDueDate = desiredDueDate;
@@ -98,7 +98,7 @@ public class Task {
         if (!questionnaire.equals(task.questionnaire)) return false;
         if (!Objects.equals(performerEmail, task.performerEmail))
             return false;
-        if (!stageList.equals(task.stageList)) return false;
+        if (!stageSet.equals(task.stageSet)) return false;
         if (!createdAt.equals(task.createdAt)) return false;
         if (!Objects.equals(guaranteedDueDate, task.guaranteedDueDate))
             return false;
@@ -124,7 +124,7 @@ public class Task {
         result = 31 * result + securitySystem.hashCode();
         result = 31 * result + questionnaire.hashCode();
         result = 31 * result + (performerEmail != null ? performerEmail.hashCode() : 0);
-        result = 31 * result + stageList.hashCode();
+        result = 31 * result + stageSet.hashCode();
         result = 31 * result + createdAt.hashCode();
         result = 31 * result + (guaranteedDueDate != null ? guaranteedDueDate.hashCode() : 0);
         result = 31 * result + (desiredDueDate != null ? desiredDueDate.hashCode() : 0);

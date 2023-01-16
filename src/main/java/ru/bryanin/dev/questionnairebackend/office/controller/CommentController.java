@@ -1,11 +1,9 @@
 package ru.bryanin.dev.questionnairebackend.office.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Comment;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.dto.task.CommentDTO;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.Comment;
 import ru.bryanin.dev.questionnairebackend.office.service.CommentService;
 
 import java.util.List;
@@ -36,8 +34,8 @@ public class CommentController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public List<Comment> getAllCommentsByTaskId(@PathVariable Long id) {
-        return commentService.getAllCommentsByTaskId(id);
+    public List<CommentDTO> getAllCommentsByTaskIdDTO(@PathVariable Long id) {
+        return commentService.getAllCommentsByTaskIdDTO(id);
     }
 
     @PostMapping("/{id}/comment")
@@ -56,7 +54,7 @@ public class CommentController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public List<Comment> addNewComment(@RequestBody Comment comment) {
-        return commentService.addNewCommentAndGetAllCommentsByTaskId(comment);
+    public List<CommentDTO> addNewCommentDTO(@RequestBody CommentDTO commentDTO) {
+        return commentService.addNewCommentAndGetAllCommentsByTaskIdDTO(commentDTO);
     }
 }

@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.office.model.user;
+package ru.bryanin.dev.questionnairebackend.office.entity.user;
 
 public enum CustomerPosition {
     DIRECTOR,

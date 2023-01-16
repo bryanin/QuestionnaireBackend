@@ -1,9 +1,8 @@
-package ru.bryanin.dev.questionnairebackend.office.model.task;
+package ru.bryanin.dev.questionnairebackend.office.entity.task;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.nio.file.Path;
 import java.time.LocalDate;
 
 @Data
@@ -24,16 +23,19 @@ public class Comment {
     private String message;
     @Column(name = "file_path")
     private String filePath;
+    @JoinColumn(table = "tasks", name = "task_status", referencedColumnName = "status", nullable = false)
+    private Status taskStatus;
 
     public Comment() {
     }
 
-    public Comment(Long id, String authorEmail, Long taskId, LocalDate createdAt, String message, String filePath) {
+    public Comment(Long id, String authorEmail, Long taskId, LocalDate createdAt, String message, String filePath, Status taskStatus) {
         this.id = id;
         this.authorEmail = authorEmail;
         this.taskId = taskId;
         this.createdAt = createdAt;
         this.message = message;
         this.filePath = filePath;
+        this.taskStatus = taskStatus;
     }
 }

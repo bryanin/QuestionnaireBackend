@@ -1,7 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsPartners;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsPartners;
 import ru.bryanin.dev.questionnairebackend.office.repository.ProjectsPartnersRepository;
 
 import java.util.List;

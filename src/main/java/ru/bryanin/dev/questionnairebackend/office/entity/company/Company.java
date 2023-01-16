@@ -1,8 +1,8 @@
-package ru.bryanin.dev.questionnairebackend.office.model.company;
+package ru.bryanin.dev.questionnairebackend.office.entity.company;
 
 import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsPartners;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsPartners;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Customer;
 
 import javax.persistence.*;
 import java.util.List;

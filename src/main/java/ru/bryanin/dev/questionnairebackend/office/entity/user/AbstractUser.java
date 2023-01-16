@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.office.model.user;
+package ru.bryanin.dev.questionnairebackend.office.entity.user;
 
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;

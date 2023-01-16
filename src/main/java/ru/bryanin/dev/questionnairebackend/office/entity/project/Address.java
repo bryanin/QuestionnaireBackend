@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.office.model.project;
+package ru.bryanin.dev.questionnairebackend.office.entity.project;
 
 import lombok.Builder;
 import lombok.Data;

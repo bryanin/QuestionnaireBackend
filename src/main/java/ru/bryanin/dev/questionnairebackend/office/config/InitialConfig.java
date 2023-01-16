@@ -1,19 +1,22 @@
 package ru.bryanin.dev.questionnairebackend.office.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.bryanin.dev.questionnairebackend.office.model.company.Company;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Address;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsFiles;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsPartners;
-import ru.bryanin.dev.questionnairebackend.office.model.task.*;
-import ru.bryanin.dev.questionnairebackend.office.model.task.SecuritySystem;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
-import ru.bryanin.dev.questionnairebackend.office.model.user.CustomerPosition;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
-import ru.bryanin.dev.questionnairebackend.office.model.user.EmployeePosition;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.bryanin.dev.questionnairebackend.office.entity.company.Company;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Address;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Project;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsFiles;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsPartners;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.*;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.SecuritySystem;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.CustomerPosition;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.EmployeePosition;
 import ru.bryanin.dev.questionnairebackend.office.repository.*;
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
@@ -22,10 +25,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Configuration
 public class InitialConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     @Bean
     CommandLineRunner commandLineRunner(
@@ -340,6 +349,7 @@ public class InitialConfig {
                     "28",
                     "");
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
             Project project01 = new Project(
                     1L,
@@ -348,7 +358,7 @@ public class InitialConfig {
                     "Строительство торгового центра в Химках",
                     "bryanin.dmitriy@luis.ru",
                     address01,
-                    LocalDate.of(2022, 2, 11),
+                    LocalDate.parse("13.02.2019", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -361,7 +371,7 @@ public class InitialConfig {
                     "Больница на 60 мест. Реализация в 2023 году",
                     "konovalov.sergey@luis.ru",
                     address01,
-                    LocalDate.of(2022, 3, 20),
+                    LocalDate.parse("18.06.2018", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -374,7 +384,7 @@ public class InitialConfig {
                     "Гостиница 5 звезд в Москве на Можайском шоссе",
                     "perov.roman@luis.ru",
                     address01,
-                    LocalDate.of(2022, 4, 1),
+                    LocalDate.parse("23.08.2020", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -387,7 +397,7 @@ public class InitialConfig {
                     "Сеть кинотеатров на юге России",
                     "perov.roman@luis.ru",
                     address01,
-                    LocalDate.of(2022, 4, 2),
+                    LocalDate.parse("22.12.2022", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -400,7 +410,7 @@ public class InitialConfig {
                     "Объект культурного наследия. Реставрация. Министерство Культуры",
                     "konovalov.sergey@luis.ru",
                     address01,
-                    LocalDate.of(2022, 2, 23),
+                    LocalDate.parse("17.11.2020", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -413,7 +423,7 @@ public class InitialConfig {
                     "Часть комплексной застройки ГК Инград",
                     "bryanin.dmitriy@luis.ru",
                     address01,
-                    LocalDate.of(2022, 4, 21),
+                    LocalDate.parse("14.04.2022", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -426,7 +436,7 @@ public class InitialConfig {
                     "Объединенный с Педагогическим институтом в 2012 году (ул. К.Маркса)",
                     "bryanin.dmitriy@luis.ru",
                     address01,
-                    LocalDate.of(2021, 12, 16),
+                    LocalDate.parse("26.03.2020", formatter),
                     Project.Status.ARCHIVED,
                     null,
                     null,
@@ -522,12 +532,12 @@ public class InitialConfig {
                     questionnaire01,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 1, 30),
-                    LocalDate.of(2022, 2, 27),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 05),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project01.setStatus(Project.Status.ACTIVE);
@@ -543,12 +553,12 @@ public class InitialConfig {
                     questionnaire02,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION)),
-                    LocalDate.of(2022, 2, 13),
-                    LocalDate.of(2022, 2, 27),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 05),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project05.setStatus(Project.Status.ACTIVE);
@@ -564,12 +574,12 @@ public class InitialConfig {
                     questionnaire03,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.STRUCTURAL_SCHEME)),
-                    LocalDate.of(2022, 3, 05),
-                    LocalDate.of(2022, 3, 27),
-                    LocalDate.of(2022, 3, 15),
-                    LocalDate.of(2022, 3, 05),
-                    LocalDate.of(2022, 3, 15),
-                    LocalDate.of(2022, 3, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project03.setStatus(Project.Status.ACTIVE);
@@ -585,12 +595,12 @@ public class InitialConfig {
                     questionnaire04,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 1, 30),
-                    LocalDate.of(2022, 2, 27),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 05),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project01.setStatus(Project.Status.ACTIVE);
@@ -606,12 +616,12 @@ public class InitialConfig {
                     questionnaire05,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 2, 16),
-                    LocalDate.of(2022, 2, 27),
-                    LocalDate.of(2022, 2, 20),
-                    LocalDate.of(2022, 2, 18),
-                    LocalDate.of(2022, 2, 20),
-                    LocalDate.of(2022, 2, 27),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project04.setStatus(Project.Status.ACTIVE);
@@ -627,12 +637,12 @@ public class InitialConfig {
                     questionnaire06,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT, Stage.ACOUSTIC_CALCULATION)),
-                    LocalDate.of(2022, 2, 10),
-                    LocalDate.of(2022, 2, 27),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 11),
-                    LocalDate.of(2022, 2, 15),
-                    LocalDate.of(2022, 2, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project04.setStatus(Project.Status.ACTIVE);
@@ -648,12 +658,12 @@ public class InitialConfig {
                     questionnaire07,
                     null,
                     new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
-                    LocalDate.of(2022, 12, 30),
-                    LocalDate.of(2023, 2, 27),
-                    LocalDate.of(2023, 2, 15),
-                    LocalDate.of(2023, 2, 05),
-                    LocalDate.of(2023, 2, 15),
-                    LocalDate.of(2023, 2, 16),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
                     null);
 
             project01.setStatus(Project.Status.ACTIVE);
@@ -667,12 +677,12 @@ public class InitialConfig {
             taskList.add(task06);
             taskList.add(task07);
 
-            ProjectsFiles projectsFiles01 = new ProjectsFiles(
-                    1L,
-                    project01.getId(),
-                    task01.getId(),
-                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA"
-            );
+//            ProjectsFiles projectsFiles01 = new ProjectsFiles(
+//                    1L,
+//                    project01.getId(),
+//                    task01.getId(),
+//                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA"
+//            );
 
 // -------  Add comments
 
@@ -680,39 +690,83 @@ public class InitialConfig {
                     1L,
                     "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 10),
+                    LocalDate.parse("15.04.2020", formatter),
                     "Инициализация заявки",
-                    ""
+                    "",
+                    Status.NEW
             );
             Comment taskComment02 = new Comment(
                     2L,
-                    "romanov.boris@luis.ru",
+                    "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 10),
-                    "Не приложены исходные данные",
-                    ""
+                    LocalDate.parse("16.04.2020", formatter),
+                    "Заполняем опросники",
+                    "",
+                    Status.TO_BE_COMPLETED_BY_CUSTOMER
             );
             Comment taskComment03 = new Comment(
                     3L,
                     "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 11),
-                    "Добавил планировки",
-                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA"
+                    LocalDate.parse("17.04.2020", formatter),
+                    "Опросники заполнены",
+                    "",
+                    Status.UNDER_INITIAL_REVIEW_BY_THE_ENGINEER
             );
             Comment taskComment04 = new Comment(
                     4L,
+                    "bryanin.dmitriy@luis.ru",
+                    1L,
+                    LocalDate.parse("18.04.2020", formatter),
+                    "Прошу дать сроки по задаче",
+                    "",
+                    Status.UNDER_REVIEW_BY_THE_HEAD_OF_THE_PROJECT_DEPARTMENT
+            );
+            Comment taskComment05 = new Comment(
+                    5L,
                     "romanov.boris@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 12),
-                    "Принято",
-                    ""
+                    LocalDate.parse("19.04.2020", formatter),
+                    "Не приложены исходные данные",
+                    "",
+                    Status.UNDER_INITIAL_REVIEW_BY_THE_ENGINEER
+            );
+            Comment taskComment06 = new Comment(
+                    6L,
+                    "bryanin.dmitriy@luis.ru",
+                    1L,
+                    LocalDate.parse("20.04.2020", formatter),
+                    "Добавил планировки",
+                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA",
+                    Status.UNDER_REVIEW_BY_THE_HEAD_OF_THE_PROJECT_DEPARTMENT
+            );
+            Comment taskComment07 = new Comment(
+                    7L,
+                    "romanov.boris@luis.ru",
+                    1L,
+                    LocalDate.parse("21.04.2020", formatter),
+                    "Принято, согласование",
+                    "",
+                    Status.UNDER_REVIEW_BY_THE_ENGINEER
+            );
+            Comment taskComment08 = new Comment(
+                    8L,
+                    "bryanin.dmitriy@luis.ru",
+                    1L,
+                    LocalDate.parse("22.04.2020", formatter),
+                    "Согласовано",
+                    "",
+                    Status.IN_QUEUE
             );
             List<Comment> taskCommentList = new ArrayList<>();
             taskCommentList.add(taskComment01);
             taskCommentList.add(taskComment02);
             taskCommentList.add(taskComment03);
             taskCommentList.add(taskComment04);
+            taskCommentList.add(taskComment05);
+            taskCommentList.add(taskComment06);
+            taskCommentList.add(taskComment07);
+            taskCommentList.add(taskComment08);
 
             companyRepository.saveAll(companyList);
             employeeRepository.saveAll(employeeList);
@@ -722,7 +776,7 @@ public class InitialConfig {
             taskCommentRepository.saveAll(taskCommentList);
             projectRepository.saveAll(projectList);
             projectsPartnersRepository.saveAll(Arrays.asList(projectsPartners01, projectsPartners02, projectsPartners03, projectsPartners04, projectsPartners05, projectsPartners06));
-            projectsFilesRepository.saveAll(Arrays.asList(projectsFiles01));
+//            projectsFilesRepository.saveAll(Arrays.asList(projectsFiles01));
 
         };
     }

@@ -1,4 +1,4 @@
-package ru.bryanin.dev.questionnairebackend.office.model.task;
+package ru.bryanin.dev.questionnairebackend.office.entity.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

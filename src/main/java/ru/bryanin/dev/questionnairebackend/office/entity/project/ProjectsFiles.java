@@ -1,7 +1,6 @@
-package ru.bryanin.dev.questionnairebackend.office.model.project;
+package ru.bryanin.dev.questionnairebackend.office.entity.project;
 
 import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
 
 import javax.persistence.*;
 

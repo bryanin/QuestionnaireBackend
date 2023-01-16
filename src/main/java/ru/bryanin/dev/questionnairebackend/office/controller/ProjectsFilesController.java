@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bryanin.dev.questionnairebackend.office.model.project.ProjectsFiles;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Comment;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsFiles;
 import ru.bryanin.dev.questionnairebackend.office.service.ProjectsFilesService;
 
 import java.util.List;

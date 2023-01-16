@@ -1,17 +1,17 @@
-package ru.bryanin.dev.questionnairebackend.office.model.user;
+package ru.bryanin.dev.questionnairebackend.office.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Comment;
+import ru.bryanin.dev.questionnairebackend.office.dto.user.EmployeeDTO;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.Comment;
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
-import ru.bryanin.dev.questionnairebackend.office.model.task.Task;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.Task;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "employees")
-//@PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends AbstractUser {
 
     @Column(name = "position")
@@ -47,6 +47,10 @@ public class Employee extends AbstractUser {
         return position;
     }
 
+    public String getPositionTitle() {
+        return position.getTitle();
+    }
+
     public void setPosition(EmployeePosition position) {
         this.position = position;
     }
@@ -66,5 +70,7 @@ public class Employee extends AbstractUser {
     public void setTaskComments(List<Comment> taskComments) {
         this.taskComments = taskComments;
     }
+
+
 
 }

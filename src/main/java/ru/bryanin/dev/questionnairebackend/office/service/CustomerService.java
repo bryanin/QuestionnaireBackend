@@ -1,8 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Customer;
 import ru.bryanin.dev.questionnairebackend.office.repository.CustomerRepository;
 
 import javax.transaction.Transactional;

@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
+import ru.bryanin.dev.questionnairebackend.office.dto.project.ProjectDTO;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Project;
 import ru.bryanin.dev.questionnairebackend.office.service.ProjectService;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class ProjectController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public List<Project> getAllProjects() {
-        return projectService.getAllProjects();
+    public List<ProjectDTO> getAllProjectsDTO() {
+        return projectService.getAllProjectsDTO();
     }
 
     @GetMapping("/{id}")
@@ -55,8 +56,8 @@ public class ProjectController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public ResponseEntity<Project> getProject(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.getProject(id));
+    public ResponseEntity<ProjectDTO> getProjectDTO(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getProjectDTO(id));
     }
 
     @PostMapping()
@@ -69,8 +70,8 @@ public class ProjectController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Project> addNewProject(@RequestBody Project project) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addNewProject(project));
+    public ResponseEntity<ProjectDTO> addNewProjectDTO(@RequestBody ProjectDTO projectDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addNewProjectDTO(projectDTO));
     }
 
     @DeleteMapping(path = "/{id}")
@@ -80,8 +81,8 @@ public class ProjectController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Project> deleteProject(@PathVariable Long id) {
-        projectService.deleteProject(id);
+    public ResponseEntity<ProjectDTO> deleteProjectDTO(@PathVariable Long id) {
+        projectService.deleteProjectDTO(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -92,7 +93,7 @@ public class ProjectController {
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody(required = false) Project project) {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.updateProject(id, project));
+    public ResponseEntity<ProjectDTO> updateProjectDTO(@PathVariable Long id, @RequestBody(required = false) ProjectDTO projectDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.updateProjectDTO(id, projectDTO));
     }
 }

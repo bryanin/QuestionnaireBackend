@@ -1,8 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.office.model.company.Company;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.entity.company.Company;
 import ru.bryanin.dev.questionnairebackend.office.repository.CompanyRepository;
 
 import java.util.List;

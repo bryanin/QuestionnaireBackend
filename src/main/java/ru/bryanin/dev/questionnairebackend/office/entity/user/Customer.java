@@ -1,7 +1,6 @@
-package ru.bryanin.dev.questionnairebackend.office.model.user;
+package ru.bryanin.dev.questionnairebackend.office.entity.user;
 
-import lombok.Data;
-import ru.bryanin.dev.questionnairebackend.office.model.company.Company;
+import ru.bryanin.dev.questionnairebackend.office.entity.company.Company;
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
 import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
 

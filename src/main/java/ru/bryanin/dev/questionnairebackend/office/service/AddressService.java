@@ -1,7 +1,7 @@
 package ru.bryanin.dev.questionnairebackend.office.service;
 
 import org.springframework.stereotype.Service;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Address;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Address;
 import ru.bryanin.dev.questionnairebackend.office.repository.AddressRepository;
 
 @Service
