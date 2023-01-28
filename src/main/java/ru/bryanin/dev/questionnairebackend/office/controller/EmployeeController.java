@@ -1,32 +1,29 @@
 package ru.bryanin.dev.questionnairebackend.office.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.bryanin.dev.questionnairebackend.office.dto.task.TaskDTO;
-import ru.bryanin.dev.questionnairebackend.office.service.TaskService;
+import ru.bryanin.dev.questionnairebackend.office.dto.user.EmployeeDTO;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.EmployeePosition;
+import ru.bryanin.dev.questionnairebackend.office.service.EmployeeService;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
-public class TaskController {
+@RequestMapping("/api/v1/employee")
+public class EmployeeController {
 
-    // TO DO
-    // Generate UUID for every task
-    // Generate short password for every task
-    // if user wasn't authorised he can type his short password
-    //
+    private final EmployeeService employeeService;
 
-    private final TaskService taskService;
-
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-    @GetMapping("/api/v1/task")
+    @GetMapping()
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:read', " +
             "'head_of_promotion_department_assistant:read'," +
@@ -42,11 +39,11 @@ public class TaskController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public List<TaskDTO> getAllTasksDTO() {
-        return taskService.getAllTasksDTO();
+    public List<EmployeeDTO> getAllEmployeesDTO() {
+        return employeeService.getAllEmployeesDTO();
     }
 
-    @GetMapping("/api/v1/task/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:read', " +
             "'head_of_promotion_department_assistant:read'," +
@@ -62,11 +59,11 @@ public class TaskController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public ResponseEntity<TaskDTO> getTaskDTO(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.getTaskDTO(id));
+    public ResponseEntity<EmployeeDTO> getEmployeeDTO(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.getEmployeeDTO(id));
     }
 
-    @GetMapping("/api/v1/project/{id}/task")
+    @GetMapping("/search")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:read', " +
             "'head_of_promotion_department_assistant:read'," +
@@ -82,74 +79,46 @@ public class TaskController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public List<TaskDTO> getAllTasksByProjectIdDTO(@PathVariable Long id) {
-        return taskService.getAllTasksByProjectIdDTO(id);
+    public ResponseEntity<Employee> getUserByEmail(@RequestParam(required = false) String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.getEmployeeByEmail(email));
     }
 
-    @GetMapping("/api/v1/employee/{id}/task")
-    @PreAuthorize("hasAnyAuthority(" +
-            "'head_of_promotion_department:read', " +
-            "'head_of_promotion_department_assistant:read'," +
-            "'head_of_design_department:read'," +
-            "'senior_designer:read'," +
-            "'middle_designer:read'," +
-            "'junior_designer:read'," +
-            "'head_of_engineer_promotion_department:read'," +
-            "'senior_engineer:read'," +
-            "'middle_engineer:read'," +
-            "'junior_engineer:read'," +
-            "'head_of_sales:read'," +
-            "'senior_sales_manager:read'," +
-            "'middle_sales_manager:read'," +
-            "'junior_sales_manager:read')")
-    public List<TaskDTO> getAllTasksByEmployeeIdWithParametersDTO(@PathVariable Long id,
-                                                                  @RequestParam(required = false) boolean owner,
-                                                                  @RequestParam(required = false) boolean performer
-                                                                  ) {
-        return taskService.getAllTasksByEmployeeIdWithParametersDTO(id, owner, performer);
-    }
-
-    @PostMapping("/api/v1/task")
-    @PreAuthorize("hasAnyAuthority(" +
-            "'head_of_promotion_department:write', " +
-            "'head_of_promotion_department_assistant:write'," +
-            "'head_of_design_department:write'," +
-            "'head_of_engineer_promotion_department:write'," +
-            "'senior_engineer:read'," +
-            "'middle_engineer:read'," +
-            "'junior_engineer:read'," +
-            "'head_of_sales:write')")
-    public ResponseEntity<TaskDTO> addNewTaskDTO(@RequestBody TaskDTO taskDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addNewTaskDTO(taskDTO));
-    }
-
-    @DeleteMapping(path = "api/v1/task/{id}")
+    @PostMapping()
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
             "'head_of_sales:write')")
-    public ResponseEntity<TaskDTO> deleteTaskDTO(@PathVariable Long id) {
-        taskService.deleteTaskDTO(id);
+    public ResponseEntity<Employee> addNewEmployeeDTO(@RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addNewEmployeeDTO(employeeDTO));
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasAnyAuthority(" +
+            "'head_of_promotion_department:write', " +
+            "'head_of_promotion_department_assistant:write'," +
+            "'head_of_design_department:write'," +
+            "'head_of_engineer_promotion_department:write'," +
+            "'head_of_sales:write')")
+    public ResponseEntity<EmployeeDTO> deleteEmployeeDTO(@PathVariable("id") Long id) {
+        employeeService.deleteEmployeeDTO(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PatchMapping(path = "api/v1/task/{id}")
+    @PatchMapping(path = "/{id}")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:write', " +
             "'head_of_promotion_department_assistant:write'," +
             "'head_of_design_department:write'," +
             "'head_of_engineer_promotion_department:write'," +
-            "'senior_engineer:read'," +
-            "'middle_engineer:read'," +
-            "'junior_engineer:read'," +
             "'head_of_sales:write')")
-    public ResponseEntity<TaskDTO> updateTaskDTO(@PathVariable Long id, @RequestBody(required = false) TaskDTO taskDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTaskDTO(id, taskDTO));
+    public ResponseEntity<EmployeeDTO> updateEmployeeDTO(@PathVariable Long id,
+                                               @RequestBody(required = false) EmployeeDTO employeeDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEmployeeDTO(id, employeeDTO));
     }
 
-    @GetMapping("/api/v1/task/{id}/status")
+    @GetMapping("/position")
     @PreAuthorize("hasAnyAuthority(" +
             "'head_of_promotion_department:read', " +
             "'head_of_promotion_department_assistant:read'," +
@@ -165,9 +134,7 @@ public class TaskController {
             "'senior_sales_manager:read'," +
             "'middle_sales_manager:read'," +
             "'junior_sales_manager:read')")
-    public Map<String, String> getAllAvailableStatuses(@PathVariable Long id) {
-        return taskService.getAllAvailableStatuses(id);
+    public Map<String, String> getAllEmployeesPositions() {
+        return employeeService.getAllEmployeesPositions();
     }
-
-
 }

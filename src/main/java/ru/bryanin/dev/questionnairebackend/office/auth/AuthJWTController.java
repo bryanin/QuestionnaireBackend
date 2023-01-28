@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
-import ru.bryanin.dev.questionnairebackend.office.repository.BasicUserRepository;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.repository.EmployeeRepository;
 import ru.bryanin.dev.questionnairebackend.office.security.JWTTokenProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +25,12 @@ import java.util.Map;
 public class AuthJWTController {
 
     private final AuthenticationManager authenticationManager;
-    private BasicUserRepository basicUserRepository;
+    private EmployeeRepository employeeRepository;
     private JWTTokenProvider jwtTokenProvider;
 
-    public AuthJWTController(AuthenticationManager authenticationManager, BasicUserRepository basicUserRepository, JWTTokenProvider jwtTokenProvider) {
+    public AuthJWTController(AuthenticationManager authenticationManager, EmployeeRepository employeeRepository, JWTTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
-        this.basicUserRepository = basicUserRepository;
+        this.employeeRepository = employeeRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -38,8 +38,8 @@ public class AuthJWTController {
     public ResponseEntity<?> login(@RequestBody AuthRequestDTO request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            BasicUser basicUser = basicUserRepository.findBasicUserByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
-            String token = jwtTokenProvider.createToken(request.getEmail(), basicUser.getSecurityRole().name());
+            Employee employee = employeeRepository.findBasicUserByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+            String token = jwtTokenProvider.createToken(request.getEmail(), employee.getSecurityRole().name());
             Map<Object, Object> response = new HashMap<>();
             response.put("email", request.getEmail());
             response.put("token", token);

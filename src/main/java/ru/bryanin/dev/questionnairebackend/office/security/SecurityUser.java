@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,15 +53,15 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromBasicUser(BasicUser basicUser) {
+    public static UserDetails fromBasicUser(Employee employee) {
         return new User(
-                basicUser.getEmail(),
-                basicUser.getPassword(),
-                basicUser.getAccessStatus().equals(AccessStatus.ACTIVE),
-                basicUser.getAccessStatus().equals(AccessStatus.ACTIVE),
-                basicUser.getAccessStatus().equals(AccessStatus.ACTIVE),
-                basicUser.getAccessStatus().equals(AccessStatus.ACTIVE),
-                basicUser.getSecurityRole().getAuthorities()
+                employee.getEmail(),
+                employee.getPassword(),
+                employee.getAccessStatus().equals(AccessStatus.ACTIVE),
+                employee.getAccessStatus().equals(AccessStatus.ACTIVE),
+                employee.getAccessStatus().equals(AccessStatus.ACTIVE),
+                employee.getAccessStatus().equals(AccessStatus.ACTIVE),
+                employee.getSecurityRole().getAuthorities()
                 );
     }
 }

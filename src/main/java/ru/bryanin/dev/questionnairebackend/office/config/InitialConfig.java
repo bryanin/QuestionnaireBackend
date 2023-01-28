@@ -1,190 +1,355 @@
 package ru.bryanin.dev.questionnairebackend.office.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.bryanin.dev.questionnairebackend.office.model.project.Project;
-import ru.bryanin.dev.questionnairebackend.office.model.task.*;
-import ru.bryanin.dev.questionnairebackend.office.model.task.System;
-import ru.bryanin.dev.questionnairebackend.office.model.user.BasicUser;
-import ru.bryanin.dev.questionnairebackend.office.model.user.Position;
-import ru.bryanin.dev.questionnairebackend.office.repository.BasicUserRepository;
-import ru.bryanin.dev.questionnairebackend.office.repository.ProjectRepository;
-import ru.bryanin.dev.questionnairebackend.office.repository.TaskCommentRepository;
-import ru.bryanin.dev.questionnairebackend.office.repository.TaskRepository;
-import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.bryanin.dev.questionnairebackend.office.entity.company.Company;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Address;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.Project;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsFiles;
+import ru.bryanin.dev.questionnairebackend.office.entity.project.ProjectsPartners;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.*;
+import ru.bryanin.dev.questionnairebackend.office.entity.task.SecuritySystem;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Customer;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.CustomerPosition;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.Employee;
+import ru.bryanin.dev.questionnairebackend.office.entity.user.EmployeePosition;
+import ru.bryanin.dev.questionnairebackend.office.repository.*;
 import ru.bryanin.dev.questionnairebackend.office.security.AccessStatus;
+import ru.bryanin.dev.questionnairebackend.office.security.SecurityRole;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Configuration
 public class InitialConfig {
 
     @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
     CommandLineRunner commandLineRunner(
-            BasicUserRepository basicUserRepository,
+            EmployeeRepository employeeRepository,
             ProjectRepository projectRepository,
             TaskRepository taskRepository,
-            TaskCommentRepository taskCommentRepository
-            //QuestionnaireRepository questionnaireRepository
+            TaskCommentRepository taskCommentRepository,
+            CompanyRepository companyRepository,
+            CustomerRepository customerRepository,
+            AddressRepository addressRepository,
+            ProjectsFilesRepository projectsFilesRepository,
+            ProjectsPartnersRepository projectsPartnersRepository
     ) {
         return args -> {
 
-// -------  Add users
+// -------  Add companies
 
-            BasicUser basicUser01 = new BasicUser(
+            Company luis = new Company(
+                    1L,
+                    "7714333985",
+                    "ЛУИС+",
+                    "ООО «Луис+Офис»",
+                    null
+            );
+
+            Company company02 = new Company(
+                    2L,
+                    "4587923709",
+                    "Компания 02",
+                    "ООО «Компания 02»",
+                    null
+            );
+
+            Company company03 = new Company(
+                    3L,
+                    "1593697845",
+                    "Компания 02",
+                    "ООО «Компания 02»",
+                    null
+            );
+
+            Company company04 = new Company(
+                    4L,
+                    "4859485926",
+                    "Компания 04",
+                    "ООО «Компания 04»",
+                    null
+            );
+
+            Company company05 = new Company(
+                    5L,
+                    "5948562368",
+                    "Компания 05",
+                    "ООО «Компания 05»",
+                    null
+            );
+
+            List<Company> companyList = new ArrayList<>(Arrays.asList(luis, company02, company03, company04, company05));
+
+// -------  Add employees
+
+            Employee employee01 = new Employee(
                     1L,
                     "kondrich.anastasiya@luis.ru",
                     "Анастасия",
                     "Кондрич",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-987-831-63-55",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.HEAD_OF_ENGINEER_PROMOTION_DEPARTMENT,
+                    EmployeePosition.HEAD_OF_ENGINEER_PROMOTION_DEPARTMENT,
                     SecurityRole.HEAD_OF_ENGINEER_PROMOTION_DEPARTMENT,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser02 = new BasicUser(
+            Employee employee02 = new Employee(
                     2L,
                     "bryanin.dmitriy@luis.ru",
                     "Дмитрий",
                     "Брянин",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-965-115-40-55",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_ENGINEER,
+                    EmployeePosition.MIDDLE_ENGINEER,
                     SecurityRole.MIDDLE_ENGINEER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser03 = new BasicUser(
+            Employee employee03 = new Employee(
                     3L,
                     "perov.roman@luis.ru",
                     "Роман",
                     "Перов",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-905-531-66-05",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_ENGINEER,
+                    EmployeePosition.MIDDLE_ENGINEER,
                     SecurityRole.MIDDLE_ENGINEER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser04 = new BasicUser(
+            Employee employee04 = new Employee(
                     4L,
                     "konovalov.sergey@luis.ru",
                     "Сергей",
                     "Коновалов",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-905-105-75-50",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_ENGINEER,
+                    EmployeePosition.MIDDLE_ENGINEER,
                     SecurityRole.MIDDLE_ENGINEER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser05 = new BasicUser(
+            Employee employee05 = new Employee(
                     5L,
                     "romanov.boris@luis.ru",
                     "Борис",
                     "Романов",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-927-623-77-01",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.HEAD_OF_DESIGN_DEPARTMENT,
+                    EmployeePosition.HEAD_OF_DESIGN_DEPARTMENT,
                     SecurityRole.HEAD_OF_DESIGN_DEPARTMENT,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser06 = new BasicUser(
+            Employee employee06 = new Employee(
                     6L,
                     "novikov.vladimir@luis.ru",
                     "Владимир",
                     "Новиков",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-987-311-17-98",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.SENIOR_DESIGNER,
+                    EmployeePosition.SENIOR_DESIGNER,
                     SecurityRole.SENIOR_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser07 = new BasicUser(
+            Employee employee07 = new Employee(
                     7L,
                     "zhuravlev.fedor@luis.ru",
                     "Федор",
                     "Журавлев",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-906-153-18-45",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.SENIOR_DESIGNER,
+                    EmployeePosition.SENIOR_DESIGNER,
                     SecurityRole.SENIOR_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser08 = new BasicUser(
+            Employee employee08 = new Employee(
                     8L,
                     "marakulin.alexander@luis.ru",
                     "Александр",
                     "Маракулин",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-986-986-07-11",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_DESIGNER,
+                    EmployeePosition.MIDDLE_DESIGNER,
                     SecurityRole.MIDDLE_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser09 = new BasicUser(
+            Employee employee09 = new Employee(
                     9L,
                     "zaporozhceva.irina@luis.ru",
                     "Ирина",
                     "Запорожцева",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-927-152-21-33",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_DESIGNER,
+                    EmployeePosition.MIDDLE_DESIGNER,
                     SecurityRole.MIDDLE_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser10 = new BasicUser(
+            Employee employee10 = new Employee(
                     10L,
                     "chuhas.irina@luis.ru",
                     "Ирина",
                     "Чухась",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-904-243-70-16",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_DESIGNER,
+                    EmployeePosition.MIDDLE_DESIGNER,
                     SecurityRole.MIDDLE_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,
+                    null
             );
-            BasicUser basicUser11 = new BasicUser(
+            Employee employee11 = new Employee(
                     11L,
                     "rassohin.mihail@luis.ru",
                     "Михаил",
                     "Рассохин",
-                    "LUIS+",
+                    luis.getId(),
                     "+7-929-779-28-28",
                     "$2a$12$FbzPqSUgdeeCazRorCOy1.Yeh8wOFhFU5sNsFPpT9H4YJxtLufdki",
-                    Position.MIDDLE_DESIGNER,
+                    EmployeePosition.MIDDLE_DESIGNER,
                     SecurityRole.MIDDLE_DESIGNER,
-                    AccessStatus.ACTIVE
+                    AccessStatus.ACTIVE,
+                    null,null
             );
-            List<BasicUser> basicUserList = new ArrayList<>();
-            basicUserList.add(basicUser01);
-            basicUserList.add(basicUser02);
-            basicUserList.add(basicUser03);
-            basicUserList.add(basicUser04);
-            basicUserList.add(basicUser05);
-            basicUserList.add(basicUser06);
-            basicUserList.add(basicUser07);
-            basicUserList.add(basicUser08);
-            basicUserList.add(basicUser09);
-            basicUserList.add(basicUser10);
-            basicUserList.add(basicUser11);
-            basicUserRepository.saveAll(basicUserList);
+            List<Employee> employeeList = new ArrayList<>();
+            employeeList.add(employee01);
+            employeeList.add(employee02);
+            employeeList.add(employee03);
+            employeeList.add(employee04);
+            employeeList.add(employee05);
+            employeeList.add(employee06);
+            employeeList.add(employee07);
+            employeeList.add(employee08);
+            employeeList.add(employee09);
+            employeeList.add(employee10);
+            employeeList.add(employee11);
+
+// -------  Add customers
+
+            Customer customer01 = new Customer(
+                    1L,
+                    "customer01@company02.com",
+                    "customer01name",
+                    "customer01surname",
+                    2L,
+                    "+79873692514",
+                    "000",
+                    CustomerPosition.DIRECTOR,
+                    SecurityRole.CUSTOMER,
+                    AccessStatus.ACTIVE,
+                    null
+            );
+
+            Customer customer02 = new Customer(
+                    2L,
+                    "customer02@company02.com",
+                    "customer02name",
+                    "customer02surname",
+                    2L,
+                    "+79873692515",
+                    "000",
+                    CustomerPosition.DESIGNER,
+                    SecurityRole.CUSTOMER,
+                    AccessStatus.ACTIVE,
+                    Arrays.asList(company04, company05)
+            );
+
+            Customer customer03 = new Customer(
+                    3L,
+                    "customer03@company03.com",
+                    "customer03name",
+                    "customer03surname",
+                    3L,
+                    "+79636932514",
+                    "000",
+                    CustomerPosition.DESIGNER,
+                    SecurityRole.CUSTOMER,
+                    AccessStatus.ACTIVE,
+                    null
+            );
+
+            Customer customer04 = new Customer(
+                    4L,
+                    "customer04@company04.com",
+                    "customer04name",
+                    "customer04surname",
+                    4L,
+                    "+79771592634",
+                    "000",
+                    CustomerPosition.DIRECTOR,
+                    SecurityRole.CUSTOMER,
+                    AccessStatus.ACTIVE,
+                    null
+            );
+
+            Customer customer05 = new Customer(
+                    5L,
+                    "customer05@company04.com",
+                    "customer05name",
+                    "customer05surname",
+                    4L,
+                    "+79771592677",
+                    "000",
+                    CustomerPosition.HEAD_OF_DEPARTMENT,
+                    SecurityRole.CUSTOMER,
+                    AccessStatus.ACTIVE,
+                    null
+            );
+
+            List<Customer> customerList = new ArrayList<>(Arrays.asList(customer01, customer02, customer03, customer04, customer05));
 
 // -------  Add projects
+
+            Address address01 = new Address(
+                    1L,
+                    125040,
+                    "Россия",
+                    "Московская",
+                    "Москва",
+                    "",
+                    "1-я Ямского Поля",
+                    "28",
+                    "");
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
             Project project01 = new Project(
                     1L,
@@ -192,8 +357,12 @@ public class InitialConfig {
                     "ТЦ Химки",
                     "Строительство торгового центра в Химках",
                     "bryanin.dmitriy@luis.ru",
-                    "Московская область",
-                    LocalDate.of(2022, 2, 11)
+                    address01,
+                    LocalDate.parse("13.02.2019", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project02 = new Project(
                     2L,
@@ -201,8 +370,12 @@ public class InitialConfig {
                     "Больница в ст. Медведевская",
                     "Больница на 60 мест. Реализация в 2023 году",
                     "konovalov.sergey@luis.ru",
-                    "Краснодарский край",
-                    LocalDate.of(2022, 3, 20)
+                    address01,
+                    LocalDate.parse("18.06.2018", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project03 = new Project(
                     3L,
@@ -210,8 +383,12 @@ public class InitialConfig {
                     "Гостиница Hot Season",
                     "Гостиница 5 звезд в Москве на Можайском шоссе",
                     "perov.roman@luis.ru",
-                    "Московская область",
-                    LocalDate.of(2022, 4, 1)
+                    address01,
+                    LocalDate.parse("23.08.2020", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project04 = new Project(
                     4L,
@@ -219,8 +396,12 @@ public class InitialConfig {
                     "Кинотеатр Родина",
                     "Сеть кинотеатров на юге России",
                     "perov.roman@luis.ru",
-                    "Ростовская область",
-                    LocalDate.of(2022, 4, 2)
+                    address01,
+                    LocalDate.parse("22.12.2022", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project05 = new Project(
                     5L,
@@ -228,8 +409,12 @@ public class InitialConfig {
                     "Музей музыки 19 века",
                     "Объект культурного наследия. Реставрация. Министерство Культуры",
                     "konovalov.sergey@luis.ru",
-                    "Калужская область",
-                    LocalDate.of(2022, 2, 23)
+                    address01,
+                    LocalDate.parse("17.11.2020", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project06 = new Project(
                     6L,
@@ -237,8 +422,12 @@ public class InitialConfig {
                     "Средняя общеобразовательная школа на 860 мест в г. Люберцы",
                     "Часть комплексной застройки ГК Инград",
                     "bryanin.dmitriy@luis.ru",
-                    "Московская область",
-                    LocalDate.of(2022, 4, 21)
+                    address01,
+                    LocalDate.parse("14.04.2022", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
             Project project07 = new Project(
                     7L,
@@ -246,9 +435,14 @@ public class InitialConfig {
                     "Политехнический институт в г. Иваново",
                     "Объединенный с Педагогическим институтом в 2012 году (ул. К.Маркса)",
                     "bryanin.dmitriy@luis.ru",
-                    "Московская область",
-                    LocalDate.of(2021, 12, 16)
+                    address01,
+                    LocalDate.parse("26.03.2020", formatter),
+                    Project.Status.ARCHIVED,
+                    null,
+                    null,
+                    null
             );
+
             List<Project> projectList = new ArrayList<>();
             projectList.add(project01);
             projectList.add(project02);
@@ -257,7 +451,58 @@ public class InitialConfig {
             projectList.add(project05);
             projectList.add(project06);
             projectList.add(project07);
-            projectRepository.saveAll(projectList);
+
+            ProjectsPartners projectsPartners01 = new ProjectsPartners(
+                    1L,
+                    company02.getId(),
+                    company02.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.DESIGNER
+            );
+
+            ProjectsPartners projectsPartners02 = new ProjectsPartners(
+                    2L,
+                    company03.getId(),
+                    company03.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.END_USER
+            );
+
+            ProjectsPartners projectsPartners03 = new ProjectsPartners(
+                    3L,
+                    company04.getId(),
+                    company04.getTitleShort(),
+                    project01.getId(),
+                    ProjectsPartners.PartnerRole.GENERAL_CONTRACTOR
+            );
+
+            project01.setProjectsPartners(Arrays.asList(projectsPartners01, projectsPartners02, projectsPartners03));
+
+            ProjectsPartners projectsPartners04 = new ProjectsPartners(
+                    4L,
+                    company03.getId(),
+                    company03.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.DESIGNER
+            );
+
+            ProjectsPartners projectsPartners05 = new ProjectsPartners(
+                    5L,
+                    company04.getId(),
+                    company04.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.END_USER
+            );
+
+            ProjectsPartners projectsPartners06 = new ProjectsPartners(
+                    6L,
+                    company05.getId(),
+                    company05.getTitleShort(),
+                    project04.getId(),
+                    ProjectsPartners.PartnerRole.GENERAL_CONTRACTOR
+            );
+
+            project04.setProjectsPartners(Arrays.asList(projectsPartners04, projectsPartners05, projectsPartners06));
 
 // -------  Add tasks
 
@@ -279,86 +524,149 @@ public class InitialConfig {
             Task task01 = new Task(
                     1L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.APPZ,
+                    SecuritySystem.APPZ,
                     questionnaire01,
                     null,
-                    LocalDate.of(2022, 1, 30));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
 
-           Task task02 = new Task(
+            project01.setStatus(Project.Status.ACTIVE);
+
+            Task task02 = new Task(
                    2L,
                     "perov.roman@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     5L,
                     null,
-                    System.AUPT,
+                    SecuritySystem.AUPT,
                     questionnaire02,
                     null,
-                    LocalDate.of(2022, 2, 13));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project05.setStatus(Project.Status.ACTIVE);
 
             Task task03 = new Task(
                     3L,
                     "konovalov.sergey@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     3L,
                     null,
-                    System.SKUD,
+                    SecuritySystem.SKUD,
                     questionnaire03,
                     null,
-                    LocalDate.of(2022, 3, 05));
+                    new HashSet<Stage>(Arrays.asList(Stage.STRUCTURAL_SCHEME)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project03.setStatus(Project.Status.ACTIVE);
 
             Task task04 = new Task(
                     4L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.SOT,
+                    SecuritySystem.SOT,
                     questionnaire04,
                     null,
-                    LocalDate.of(2022, 1, 30));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project01.setStatus(Project.Status.ACTIVE);
 
             Task task05 = new Task(
                     5L,
                     "perov.roman@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     4L,
                     null,
-                    System.SOTS,
+                    SecuritySystem.SOTS,
                     questionnaire05,
                     null,
-                    LocalDate.of(2022, 2, 16));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project04.setStatus(Project.Status.ACTIVE);
 
             Task task06 = new Task(
                     6L,
                     "konovalov.sergey@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     4L,
                     null,
-                    System.SOUE,
+                    SecuritySystem.SOUE,
                     questionnaire06,
                     null,
-                    LocalDate.of(2022, 2, 10));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT, Stage.ACOUSTIC_CALCULATION)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project04.setStatus(Project.Status.ACTIVE);
 
             Task task07 = new Task(
                     7L,
                     "bryanin.dmitriy@luis.ru",
-                    Status.IN_HEAP,
+                    Status.NEW,
                     Complexity.LEVEL_1,
                     1L,
                     null,
-                    System.SPS,
+                    SecuritySystem.SPS,
                     questionnaire07,
                     null,
-                    LocalDate.of(2022, 12, 30));
+                    new HashSet<Stage>(Arrays.asList(Stage.SPECIFICATION, Stage.ARRANGEMENT_OF_EQUIPMENT)),
+                    LocalDate.parse("26.09.2020", formatter),
+                    LocalDate.parse("22.02.2022", formatter),
+                    LocalDate.parse("06.03.2021", formatter),
+                    LocalDate.parse("05.05.2021", formatter),
+                    LocalDate.parse("15.08.2021", formatter),
+                    LocalDate.parse("09.05.2021", formatter),
+                    null);
+
+            project01.setStatus(Project.Status.ACTIVE);
 
             List<Task> taskList = new ArrayList<>();
             taskList.add(task01);
@@ -368,43 +676,107 @@ public class InitialConfig {
             taskList.add(task05);
             taskList.add(task06);
             taskList.add(task07);
-            taskRepository.saveAll(taskList);
+
+//            ProjectsFiles projectsFiles01 = new ProjectsFiles(
+//                    1L,
+//                    project01.getId(),
+//                    task01.getId(),
+//                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA"
+//            );
 
 // -------  Add comments
+
             Comment taskComment01 = new Comment(
                     1L,
-                    2L,
+                    "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 10),
-                    "Инициализация заявки"
+                    LocalDate.parse("15.04.2020", formatter),
+                    "Инициализация заявки",
+                    "",
+                    Status.NEW
             );
             Comment taskComment02 = new Comment(
                     2L,
-                    2L,
+                    "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 10),
-                    "Обновление информации"
+                    LocalDate.parse("16.04.2020", formatter),
+                    "Заполняем опросники",
+                    "",
+                    Status.TO_BE_COMPLETED_BY_CUSTOMER
             );
             Comment taskComment03 = new Comment(
                     3L,
-                    4L,
+                    "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 11),
-                    "Вопрос по заявке"
+                    LocalDate.parse("17.04.2020", formatter),
+                    "Опросники заполнены",
+                    "",
+                    Status.UNDER_INITIAL_REVIEW_BY_THE_ENGINEER
             );
             Comment taskComment04 = new Comment(
                     4L,
-                    2L,
+                    "bryanin.dmitriy@luis.ru",
                     1L,
-                    LocalDate.of(2022, 5, 12),
-                    "Ответ по заявке"
+                    LocalDate.parse("18.04.2020", formatter),
+                    "Прошу дать сроки по задаче",
+                    "",
+                    Status.UNDER_REVIEW_BY_THE_HEAD_OF_THE_PROJECT_DEPARTMENT
+            );
+            Comment taskComment05 = new Comment(
+                    5L,
+                    "romanov.boris@luis.ru",
+                    1L,
+                    LocalDate.parse("19.04.2020", formatter),
+                    "Не приложены исходные данные",
+                    "",
+                    Status.UNDER_INITIAL_REVIEW_BY_THE_ENGINEER
+            );
+            Comment taskComment06 = new Comment(
+                    6L,
+                    "bryanin.dmitriy@luis.ru",
+                    1L,
+                    LocalDate.parse("20.04.2020", formatter),
+                    "Добавил планировки",
+                    "https://disk.yandex.ru/d/2ZzId3Qyzf9agA",
+                    Status.UNDER_REVIEW_BY_THE_HEAD_OF_THE_PROJECT_DEPARTMENT
+            );
+            Comment taskComment07 = new Comment(
+                    7L,
+                    "romanov.boris@luis.ru",
+                    1L,
+                    LocalDate.parse("21.04.2020", formatter),
+                    "Принято, согласование",
+                    "",
+                    Status.UNDER_REVIEW_BY_THE_ENGINEER
+            );
+            Comment taskComment08 = new Comment(
+                    8L,
+                    "bryanin.dmitriy@luis.ru",
+                    1L,
+                    LocalDate.parse("22.04.2020", formatter),
+                    "Согласовано",
+                    "",
+                    Status.IN_QUEUE
             );
             List<Comment> taskCommentList = new ArrayList<>();
             taskCommentList.add(taskComment01);
             taskCommentList.add(taskComment02);
             taskCommentList.add(taskComment03);
             taskCommentList.add(taskComment04);
+            taskCommentList.add(taskComment05);
+            taskCommentList.add(taskComment06);
+            taskCommentList.add(taskComment07);
+            taskCommentList.add(taskComment08);
+
+            companyRepository.saveAll(companyList);
+            employeeRepository.saveAll(employeeList);
+            customerRepository.saveAll(customerList);
+            addressRepository.save(address01);
+            taskRepository.saveAll(taskList);
             taskCommentRepository.saveAll(taskCommentList);
+            projectRepository.saveAll(projectList);
+            projectsPartnersRepository.saveAll(Arrays.asList(projectsPartners01, projectsPartners02, projectsPartners03, projectsPartners04, projectsPartners05, projectsPartners06));
+//            projectsFilesRepository.saveAll(Arrays.asList(projectsFiles01));
 
         };
     }
