@@ -1,5 +1,8 @@
 HELP.md
 target/
+src/test
+src/main/java/ru/bryanin/dev/questionnairebackend/office/config/InitialConfig.java
+src/main/resources/application.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
