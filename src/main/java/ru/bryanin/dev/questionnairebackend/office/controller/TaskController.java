@@ -169,5 +169,24 @@ public class TaskController {
         return taskService.getAllAvailableStatuses(id);
     }
 
+    @GetMapping("/api/v1/task/quantity")
+    @PreAuthorize("hasAnyAuthority(" +
+            "'head_of_promotion_department:read', " +
+            "'head_of_promotion_department_assistant:read'," +
+            "'head_of_design_department:read'," +
+            "'senior_designer:read'," +
+            "'middle_designer:read'," +
+            "'junior_designer:read'," +
+            "'head_of_engineer_promotion_department:read'," +
+            "'senior_engineer:read'," +
+            "'middle_engineer:read'," +
+            "'junior_engineer:read'," +
+            "'head_of_sales:read'," +
+            "'senior_sales_manager:read'," +
+            "'middle_sales_manager:read'," +
+            "'junior_sales_manager:read')")
+    public List<Long> quantityOfNewTasks() {
+        return taskService.quantityOfNewTasks();
+    }
 
 }

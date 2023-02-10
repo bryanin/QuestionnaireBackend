@@ -5,19 +5,26 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import io.restassured.response.Response;
+import org.springframework.stereotype.Component;
+
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.with;
 
-public class TestProjectControllerTest {
+@Component
+public class ProjectControllerTest {
 
-    public final String URI = "http://localhost:8080";
-    public final String URL = "/api/v1/auth/login";
-    public String jwt;
+    public String URI;
+    public String token;
 
-    @BeforeAll
-    public void TestGetTokenTest() throws JsonProcessingException {
-        if (jwt == null) {
+    public ProjectControllerTest() {
+        this.URI = "http://localhost:8080";
+        this.token = null;
+    }
+
+    public String getToken() {
+        String URL = "/api/v1/auth/login";
+        if (token == null) {
             String loginPasswordJson = "{\"email\": \"" + "kondrich.anastasiya@luis.ru" + "\", \"password\": \"" + "123" + "\" }";
             String body = with()
                     .contentType(ContentType.JSON)
@@ -29,19 +36,38 @@ public class TestProjectControllerTest {
                     .extract()
                     .body()
                     .asString();
-            System.out.println(body);
-            JsonNode jsonNode = new ObjectMapper().readValue(body, JsonNode.class);
-            jwt = jsonNode.get("token").asText();
+            try {
+                JsonNode jsonNode = new ObjectMapper().readValue(body, JsonNode.class);
+                token = jsonNode.get("token").asText();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+
         }
-        System.out.println(jwt);
-        //return jwt;
+        return token;
     }
 
-
-    @Test
-    public void getRequestAndGet200OK() {
+    public void getAllProjectsAndAssertThatStatusIsCode200() {
+        String URL = "/api/v1/project";
         RestAssured
-                .when().get(URL)
-                .then().assertThat().statusCode(200);
+                .with()
+                .contentType(ContentType.JSON)
+                .baseUri(URI)
+                .header("Authorization", getToken())
+                .get(URL)
+                .then()
+                .statusCode(200);
+    }
+
+    public void getAllProjectsAndAssertThatJsonIsValid() {
+//        String URL = "/api/v1/project";
+//        given()
+//                .with()
+//                .contentType(ContentType.JSON)
+//                .baseUri(URI)
+//                .header("Authorization", getToken())
+//                .get(URL)
+//                .then()
+//                .body("ownerEmail", a)
     }
 }

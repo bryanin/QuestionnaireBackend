@@ -306,4 +306,11 @@ public class TaskService {
         return taskStatusesMap;
     }
 
+    public List<Long> quantityOfNewTasks() {
+        List<Long> list = new ArrayList<>();
+        list.add(Long.valueOf(taskRepository.findAll().size()));
+        list.add(taskRepository.findAll().stream().filter(task -> task.getCreatedAt().isAfter(LocalDate.now().minusDays(7))).count());
+        return  list;
+    }
+
 }
